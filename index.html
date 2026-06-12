@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>A. Julian Pacheco Mendez — Biomedical Researcher & Data Scientist</title>
-<meta name="description" content="A. Julian Pacheco Mendez — biomedical researcher in HIV/SIV immunology at OHSU and data scientist working at the intersection of computational biology, machine learning, and translational medicine.">
+<title>Julian Pacheco — Biomedical Researcher & Data Scientist</title>
+<meta name="description" content="Julian Pacheco — biomedical researcher in HIV/SIV immunology at OHSU and data scientist working at the intersection of computational biology, machine learning, and translational medicine.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -19,9 +19,12 @@ html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--ink);font-family:var(--body);-webkit-font-smoothing:antialiased;line-height:1.5;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
 ::selection{background:var(--accent);color:var(--bg)}
+#cells{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
 #loader{position:fixed;inset:0;z-index:1000;background:var(--bg);display:flex;align-items:center;justify-content:center;transition:transform .8s cubic-bezier(.76,0,.24,1);pointer-events:all}
 #loader.done{transform:translateY(-100%);pointer-events:none}
-.boot-inner{display:flex;flex-direction:column;gap:2.5rem;padding:0 clamp(1.2rem,5vw,4rem);width:100%;max-width:900px}
+.boot-inner{display:flex;flex-direction:column;gap:2rem;padding:0 clamp(1.2rem,5vw,4rem);width:100%;max-width:900px}
+.boot-name{font-family:var(--display);font-size:clamp(1.1rem,3vw,1.6rem);font-weight:600;color:var(--ink);letter-spacing:-.01em;opacity:0;animation:fadeUp .5s ease .05s forwards}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 .boot-counter{font-family:var(--mono);font-size:clamp(5rem,18vw,11rem);color:var(--accent);letter-spacing:-.04em;line-height:1}
 .boot-lines{display:flex;flex-direction:column;gap:.5rem}
 .boot-line{font-family:var(--mono);font-size:.85rem;letter-spacing:.06em;color:var(--muted);opacity:0;transform:translateY(8px);transition:opacity .4s ease,transform .4s ease}
@@ -35,8 +38,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content
 .nav-links a::after{content:"";position:absolute;left:0;bottom:-4px;width:0;height:1px;background:#fff;transition:width .3s}
 .nav-links a:hover::after{width:100%}
 @media(max-width:600px){.nav-links a:not(.nav-cta){display:none}}
-.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:0 clamp(1.2rem,5vw,4rem);overflow:hidden}
-#cells{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:0 clamp(1.2rem,5vw,4rem);z-index:1}
 .hero-inner{position:relative;z-index:2;max-width:1400px}
 .eyebrow{font-family:var(--mono);font-size:.8rem;color:var(--accent);letter-spacing:.08em;margin-bottom:1.5rem;display:flex;align-items:center;gap:.6rem}
 .eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent)}
@@ -53,7 +55,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content
 .scroll-hint{display:flex;align-items:center;gap:.5rem}
 .scroll-hint .dot{width:5px;height:5px;border-radius:50%;background:var(--accent);animation:pulse 1.8s infinite}
 @keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
-section{padding:clamp(4rem,10vw,9rem) clamp(1.2rem,5vw,4rem);position:relative}
+section{padding:clamp(4rem,10vw,9rem) clamp(1.2rem,5vw,4rem);position:relative;z-index:1;background:rgba(10,12,11,0.82)}
 .section-head{display:flex;align-items:baseline;gap:1rem;margin-bottom:3.5rem;border-bottom:1px solid var(--line-solid);padding-bottom:1.2rem}
 .section-num{font-family:var(--mono);font-size:.8rem;color:var(--accent)}
 .section-head h2{font-family:var(--display);font-weight:500;font-size:clamp(1.6rem,4vw,2.8rem);letter-spacing:-.02em}
@@ -100,13 +102,15 @@ section{padding:clamp(4rem,10vw,9rem) clamp(1.2rem,5vw,4rem);position:relative}
 .contact-email:hover::after{transform:scaleX(1)}
 .contact-links{display:flex;gap:1.6rem;justify-content:center;margin-top:2.5rem;font-family:var(--mono);font-size:.82rem;color:var(--muted)}
 .contact-links a:hover{color:var(--accent)}
-footer{padding:2rem clamp(1.2rem,5vw,4rem);border-top:1px solid var(--line-solid);display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;font-family:var(--mono);font-size:.72rem;color:var(--muted)}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.hero h1 .line span{transform:none}.hero-sub,.hero-meta,.reveal{opacity:1;transform:none}}
+footer{padding:2rem clamp(1.2rem,5vw,4rem);border-top:1px solid var(--line-solid);display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;font-family:var(--mono);font-size:.72rem;color:var(--muted);position:relative;z-index:1;background:var(--bg)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.hero h1 .line span{transform:none}.hero-sub,.hero-meta,.reveal{opacity:1;transform:none}.boot-name{opacity:1;transform:none}}
 </style>
 </head>
 <body>
+<canvas id="cells"></canvas>
 <div id="loader" aria-label="Loading">
   <div class="boot-inner">
+    <div class="boot-name">Julian Pacheco</div>
     <div class="boot-counter">00</div>
     <div class="boot-lines">
       <div class="boot-line">initializing</div>
@@ -117,18 +121,17 @@ footer{padding:2rem clamp(1.2rem,5vw,4rem);border-top:1px solid var(--line-solid
   </div>
 </div>
 <nav>
-  <a href="#top" class="brand">APM&#8260;</a>
+  <a href="#top" class="brand">JP&#8260;</a>
   <div class="nav-links">
     <a href="#focus">Focus</a><a href="#experience">Experience</a><a href="#education">Education</a><a href="#research">Research</a><a href="#skills">Skills</a><a href="#contact" class="nav-cta">Contact</a>
   </div>
 </nav>
 <header class="hero" id="top">
-  <canvas id="cells"></canvas>
   <div class="hero-inner">
     <div class="eyebrow">Beaverton, Oregon</div>
     <h1>
-      <span class="line"><span>A. Julian</span></span>
-      <span class="line"><span>Pacheco <em>Mendez</em></span></span>
+      <span class="line"><span>Julian</span></span>
+      <span class="line"><span><em>Pacheco</em></span></span>
     </h1>
     <p class="hero-sub">Biomedical researcher in HIV/SIV immunology, building toward drug discovery at the intersection of computational biology, machine learning, and translational medicine.</p>
   </div>
@@ -152,21 +155,21 @@ footer{padding:2rem clamp(1.2rem,5vw,4rem);border-top:1px solid var(--line-solid
 </section>
 <section id="experience">
   <div class="section-head"><span class="section-num">02</span><h2>Experience</h2></div>
-  <div class="entry reveal">
+  <div class="entry reveal" data-morph="lab">
     <div class="when">2021 &mdash; Present</div>
     <div>
       <div class="role">Research Assistant</div>
       <div class="org">OHSU &middot; Vaccine and Gene Therapy Institute &middot; Beaverton, OR</div>
       <div class="desc"><ul>
-        <li>Generated and analyzed high-dimensional flow cytometry datasets across human and non-human primate models, building multiparameter pipelines (gating, titration, downstream quantification) feeding publications, presentations, and grant reporting</li>
-        <li>Produced longitudinal immune response data for a Gilead-funded Phase 1b trial (NCT04811040) of lenacapavir with teropavimab and zinlirvimab, an FDA Breakthrough Therapy-designated regimen now in Phase 2; quantified CD4+/CD8+ T cell responses across 52 weeks, contributing analysis presented at IAS 2025</li>
+        <li>Generated and analyzed high dimensional flow cytometry datasets across human and non-human primate models, building multiparameter pipelines (gating, titration, downstream quantification) feeding publications, presentations, and grant reporting</li>
+        <li>Produced longitudinal immune response data for a Gilead funded Phase 1b trial (NCT04811040) of lenacapavir with teropavimab and zinlirvimab, an FDA Breakthrough Therapy designated regimen now in Phase 2; quantified CD4+/CD8+ T cell responses across 52 weeks, contributing analysis presented at IAS 2025</li>
         <li>Performed quantitative immunophenotyping on patient cohort samples (RV254/SEARCH010, Thailand) across acute and chronic infection, characterizing T cell and NK activation, memory, and function</li>
-        <li>Designed longitudinal multi-tissue NHP experiments, structuring time-series datasets (viral load, cytokine, cell-associated RNA/DNA) to model SIV reservoir dynamics under treatment</li>
-        <li>Evaluated therapeutic candidates through dose titration experiments, generating dose-response data on latency reversal agents and a novel IL-15 immunotherapy</li>
+        <li>Designed longitudinal multi tissue NHP experiments, structuring time series datasets (viral load, cytokine, cell associated RNA/DNA) to model SIV reservoir dynamics under treatment</li>
+        <li>Evaluated therapeutic candidates through dose titration experiments, generating dose response data on latency reversal agents and a novel IL-15 immunotherapy</li>
       </ul></div>
     </div>
   </div>
-  <div class="entry reveal">
+  <div class="entry reveal" data-morph="desert">
     <div class="when">2020</div>
     <div>
       <div class="role">Biological Field Technician (Contract)</div>
@@ -178,7 +181,7 @@ footer{padding:2rem clamp(1.2rem,5vw,4rem);border-top:1px solid var(--line-solid
     </div>
   </div>
 </section>
-<section id="education">
+<section id="education" data-morph="education">
   <div class="section-head"><span class="section-num">03</span><h2>Education</h2></div>
   <div class="entry reveal">
     <div class="when">2024 &mdash; 2026</div>
@@ -195,7 +198,7 @@ footer{padding:2rem clamp(1.2rem,5vw,4rem);border-top:1px solid var(--line-solid
     </div>
   </div>
 </section>
-<section id="research">
+<section id="research" data-morph="lab">
   <div class="section-head"><span class="section-num">04</span><h2>Research &amp; Presentations</h2></div>
   <div class="pub reveal">
     <div class="year">2023</div>
@@ -240,7 +243,7 @@ footer{padding:2rem clamp(1.2rem,5vw,4rem);border-top:1px solid var(--line-solid
   <div class="pub reveal">
     <div class="year">2023</div>
     <div class="pub-body">
-      <div class="pub-title">Mitchell J, Subra C, <strong>A. Julian Pacheco Mendez</strong>, et al. &ldquo;Compartmentalized Clonal Expansions of CD8+ T Cells in CSF During Acute HIV Infection.&rdquo; Contributions featured.</div>
+      <div class="pub-title">Mitchell J, Subra C, <strong>Julian Pacheco</strong>, et al. &ldquo;Compartmentalized Clonal Expansions of CD8+ T Cells in CSF During Acute HIV Infection.&rdquo; Contributions featured.</div>
       <div class="pub-venue">CROI 2023 (Virtual)</div>
     </div>
     <span class="pub-type poster">Poster</span>
@@ -273,16 +276,16 @@ footer{padding:2rem clamp(1.2rem,5vw,4rem);border-top:1px solid var(--line-solid
 <section class="contact" id="contact">
   <div class="eyebrow">Open to opportunities</div>
   <h2>Let's build<br>something.</h2>
-  <a href="mailto:apacheco26@outlook.com" class="contact-email">apacheco26@outlook.com</a>
+  <a href="mailto:apacheco26@outlook.com" class="contact-email" data-magnetic>apacheco26@outlook.com</a>
   <div class="contact-links">
-    <a href="https://github.com/apacheco26" target="_blank" rel="noopener">GitHub &#8599;</a>
+    <a href="https://github.com/apacheco26" target="_blank" rel="noopener" data-magnetic>GitHub &#8599;</a>
   </div>
 </section>
-<footer><span>&copy; 2026 A. Julian Pacheco Mendez</span><span>Portland, Oregon</span></footer>
+<footer><span>&copy; 2026 Julian Pacheco</span><span>Portland, Oregon</span></footer>
 <script>
 const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-// Boot sequence
+// ── Boot sequence ──────────────────────────────────────────────
 const loader = document.getElementById('loader');
 const bootCount = loader.querySelector('.boot-counter');
 const bootLines = loader.querySelectorAll('.boot-line');
@@ -297,48 +300,216 @@ if (reduce) {
   loader.style.display = 'none';
   document.body.classList.add('loaded');
 } else {
-  // Show first three lines during the counter run
   [0, 400, 900].forEach((delay, i) => {
     setTimeout(() => bootLines[i].classList.add('show'), delay);
   });
-
-  // Counter eases over 2 seconds
   const duration = 2000;
   const t0 = performance.now();
-  function tick(now) {
+  function tickBoot(now) {
     const p = Math.min((now - t0) / duration, 1);
     const eased = 1 - Math.pow(1 - p, 2);
     bootCount.textContent = String(Math.floor(eased * 100)).padStart(2, '0');
-    if (p < 1) {
-      requestAnimationFrame(tick);
-    } else {
+    if (p < 1) { requestAnimationFrame(tickBoot); }
+    else {
       bootCount.textContent = '100';
       bootLines[3].classList.add('show', 'active');
       setTimeout(revealPage, 700);
     }
   }
-  requestAnimationFrame(tick);
-
-  // Fallback in case something stalls
+  requestAnimationFrame(tickBoot);
   setTimeout(() => { if (!document.body.classList.contains('loaded')) revealPage(); }, 4000);
 }
 
-// Scroll reveal
+// ── Scroll reveal ──────────────────────────────────────────────
 const io = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
 }, {threshold: .15});
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-// Canvas animation
+// ── Magnetic pull ──────────────────────────────────────────────
+if (!reduce) {
+  document.querySelectorAll('[data-magnetic]').forEach(el => {
+    el.addEventListener('mouseenter', () => { el.style.transition = 'transform 0.1s ease'; });
+    el.addEventListener('mousemove', (e) => {
+      const r = el.getBoundingClientRect();
+      const dx = e.clientX - (r.left + r.width / 2);
+      const dy = e.clientY - (r.top + r.height / 2);
+      el.style.transform = `translate(${dx * 0.35}px, ${dy * 0.35}px)`;
+    });
+    el.addEventListener('mouseleave', () => {
+      el.style.transition = 'transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94)';
+      el.style.transform = '';
+      setTimeout(() => { el.style.transition = ''; }, 500);
+    });
+  });
+}
+
+// ── Canvas + particle morphing ─────────────────────────────────
 const canvas = document.getElementById('cells');
 const ctx = canvas.getContext('2d');
-let W, H, points = [];
-function size(){W=canvas.width=canvas.offsetWidth*devicePixelRatio;H=canvas.height=canvas.offsetHeight*devicePixelRatio;}
-function seed(){points=[];const c=Math.min(90,Math.floor(W*H/26000));for(let i=0;i<c;i++){const cl=Math.random();let cx,cy;if(cl<.4){cx=W*.7;cy=H*.55;}else if(cl<.7){cx=W*.3;cy=H*.4;}else{cx=Math.random()*W;cy=Math.random()*H;}points.push({x:cl<.7?cx+(Math.random()-.5)*W*.35:cx,y:cl<.7?cy+(Math.random()-.5)*H*.35:cy,vx:(Math.random()-.5)*.12,vy:(Math.random()-.5)*.12,r:(Math.random()*1.6+.6)*devicePixelRatio,a:Math.random()*.5+.15});}}
-function draw(){ctx.clearRect(0,0,W,H);for(let i=0;i<points.length;i++){const p=points[i];for(let j=i+1;j<points.length;j++){const q=points[j];const d=Math.hypot(p.x-q.x,p.y-q.y);if(d<110*devicePixelRatio){ctx.strokeStyle=`rgba(61,255,192,${.05*(1-d/(110*devicePixelRatio))})`;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.stroke();}}}points.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=`rgba(61,255,192,${p.a})`;ctx.fill();});if(!reduce)requestAnimationFrame(draw);}
-function init(){size();seed();draw();}
-window.addEventListener('resize',()=>{size();seed();});
+let W, H, points = [], morphTargets = null;
+
+// Shape library (normalized 0-1 coords, generated after each resize)
+let shapes = {};
+
+function genShapes() {
+  function line(x1, y1, x2, y2, n) {
+    return Array.from({length: n}, (_, i) => ({
+      x: x1 + (x2 - x1) * i / Math.max(n - 1, 1),
+      y: y1 + (y2 - y1) * i / Math.max(n - 1, 1)
+    }));
+  }
+  function arc(cx, cy, rx, ry, n) {
+    return Array.from({length: n}, (_, i) => {
+      const a = (2 * Math.PI * i) / n;
+      return {x: cx + rx * Math.cos(a), y: cy + ry * Math.sin(a)};
+    });
+  }
+  function scatter(x, y, w, h, n) {
+    return Array.from({length: n}, () => ({x: x + Math.random() * w, y: y + Math.random() * h}));
+  }
+
+  // Lab: pipette (left) + Erlenmeyer flask (right)
+  shapes.lab = [
+    ...line(0.32, 0.15, 0.32, 0.65, 12),   // pipette body
+    ...arc(0.32, 0.68, 0.05, 0.04, 8),      // pipette bulb
+    ...line(0.32, 0.73, 0.32, 0.86, 5),     // pipette tip
+    ...line(0.60, 0.18, 0.60, 0.38, 7),     // flask neck L
+    ...line(0.64, 0.18, 0.64, 0.38, 7),     // flask neck R
+    ...line(0.60, 0.38, 0.44, 0.75, 9),     // flask body L slope
+    ...line(0.64, 0.38, 0.80, 0.75, 9),     // flask body R slope
+    ...line(0.44, 0.75, 0.80, 0.75, 9),     // flask bottom
+    ...scatter(0.52, 0.46, 0.20, 0.22, 8),  // liquid bubbles
+  ];
+
+  // Desert: mesa butte (left) + saguaro cactus (right) + horizon + sun
+  shapes.desert = [
+    ...line(0.05, 0.68, 0.95, 0.68, 13),   // horizon
+    ...line(0.07, 0.68, 0.27, 0.43, 10),   // mesa left slope
+    ...line(0.27, 0.43, 0.48, 0.43, 8),    // mesa plateau
+    ...line(0.48, 0.43, 0.58, 0.68, 8),    // mesa right slope
+    ...line(0.73, 0.40, 0.73, 0.68, 10),   // cactus body
+    ...line(0.63, 0.52, 0.73, 0.52, 5),    // cactus left arm H
+    ...line(0.63, 0.45, 0.63, 0.52, 4),    // cactus left arm V
+    ...line(0.73, 0.50, 0.83, 0.50, 5),    // cactus right arm H
+    ...line(0.83, 0.43, 0.83, 0.50, 4),    // cactus right arm V
+    ...arc(0.86, 0.24, 0.07, 0.07, 8),     // sun
+    ...scatter(0.05, 0.70, 0.90, 0.10, 9), // ground texture
+  ];
+
+  // Education: neoclassical building with columns + pediment
+  shapes.education = [
+    ...line(0.22, 0.42, 0.22, 0.78, 10),   // left wall
+    ...line(0.78, 0.42, 0.78, 0.78, 10),   // right wall
+    ...line(0.22, 0.78, 0.78, 0.78, 10),   // base
+    ...line(0.22, 0.42, 0.50, 0.22, 10),   // pediment left
+    ...line(0.50, 0.22, 0.78, 0.42, 10),   // pediment right
+    ...line(0.22, 0.42, 0.78, 0.42, 8),    // entablature
+    ...line(0.36, 0.42, 0.36, 0.78, 5),    // column 1
+    ...line(0.50, 0.42, 0.50, 0.78, 5),    // column 2
+    ...line(0.64, 0.42, 0.64, 0.78, 5),    // column 3
+    ...scatter(0.10, 0.08, 0.80, 0.12, 7), // knowledge dots
+  ];
+}
+
+function setMorphState(state) {
+  morphTargets = (state !== 'free' && shapes[state]) ? shapes[state] : null;
+}
+
+function size() {
+  W = canvas.width = canvas.offsetWidth * devicePixelRatio;
+  H = canvas.height = canvas.offsetHeight * devicePixelRatio;
+}
+
+function seed() {
+  points = [];
+  const c = Math.min(100, Math.floor(W * H / 22000));
+  for (let i = 0; i < c; i++) {
+    const cl = Math.random();
+    let cx, cy;
+    if (cl < .4) { cx = W * .7; cy = H * .55; }
+    else if (cl < .7) { cx = W * .3; cy = H * .4; }
+    else { cx = Math.random() * W; cy = Math.random() * H; }
+    const a = Math.random() * .5 + .15;
+    points.push({
+      x: cl < .7 ? cx + (Math.random() - .5) * W * .35 : cx,
+      y: cl < .7 ? cy + (Math.random() - .5) * H * .35 : cy,
+      vx: (Math.random() - .5) * .12,
+      vy: (Math.random() - .5) * .12,
+      r: (Math.random() * 1.6 + .6) * devicePixelRatio,
+      a
+    });
+  }
+  genShapes();
+}
+
+function draw() {
+  ctx.clearRect(0, 0, W, H);
+  const isMorphed = morphTargets !== null;
+
+  // Update positions
+  points.forEach((p, i) => {
+    if (isMorphed && i < morphTargets.length) {
+      p.x += (morphTargets[i].x * W - p.x) * 0.045;
+      p.y += (morphTargets[i].y * H - p.y) * 0.045;
+    } else {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0 || p.x > W) p.vx *= -1;
+      if (p.y < 0 || p.y > H) p.vy *= -1;
+    }
+  });
+
+  // Draw connecting lines
+  const lineThresh = (isMorphed ? 70 : 110) * devicePixelRatio;
+  const lineAlpha = isMorphed ? 0.18 : 0.05;
+  for (let i = 0; i < points.length; i++) {
+    for (let j = i + 1; j < points.length; j++) {
+      const d = Math.hypot(points[i].x - points[j].x, points[i].y - points[j].y);
+      if (d < lineThresh) {
+        ctx.strokeStyle = `rgba(61,255,192,${lineAlpha * (1 - d / lineThresh)})`;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(points[i].x, points[i].y);
+        ctx.lineTo(points[j].x, points[j].y);
+        ctx.stroke();
+      }
+    }
+  }
+
+  // Draw dots
+  if (isMorphed) {
+    ctx.shadowColor = 'rgba(61,255,192,0.55)';
+    ctx.shadowBlur = 7 * devicePixelRatio;
+  }
+  points.forEach((p, i) => {
+    const targeted = isMorphed && i < morphTargets.length;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r * (targeted ? 1.4 : 1), 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(61,255,192,${targeted ? 0.88 : (isMorphed ? p.a * 0.22 : p.a)})`;
+    ctx.fill();
+  });
+  if (isMorphed) { ctx.shadowBlur = 0; ctx.shadowColor = 'transparent'; }
+
+  if (!reduce) requestAnimationFrame(draw);
+}
+
+function init() { size(); seed(); draw(); }
+window.addEventListener('resize', () => { size(); seed(); });
 init();
+
+// ── Morph on scroll ────────────────────────────────────────────
+if (!reduce) {
+  const morphObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) setMorphState(e.target.dataset.morph || 'free'); });
+  }, {threshold: 0.25});
+  document.querySelectorAll('[data-morph]').forEach(el => morphObs.observe(el));
+
+  // Reset to free when hero is back in view
+  const heroObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) setMorphState('free'); });
+  }, {threshold: 0.2});
+  heroObs.observe(document.querySelector('.hero'));
+}
 </script>
 </body>
 </html>
