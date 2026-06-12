@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A. Julian Pacheco Mendez — Biomedical Researcher & Data Scientist</title>
+<meta name="description" content="A. Julian Pacheco Mendez — biomedical researcher in HIV/SIV immunology at OHSU and data scientist working at the intersection of computational biology, machine learning, and translational medicine.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0c0b;--bg-soft:#121514;--ink:#f2f4f1;--muted:#8a928c;
+  --line-solid:#252a27;--accent:#3dffc0;--accent-dim:#1f8367;
+  --display:'Space Grotesk',sans-serif;--body:'Inter',sans-serif;--mono:'JetBrains Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);-webkit-font-smoothing:antialiased;line-height:1.5;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--accent);color:var(--bg)}
+#loader{position:fixed;inset:0;z-index:1000;background:var(--bg);display:flex;align-items:center;justify-content:center;transition:opacity .6s ease,visibility .6s ease}
+#loader.done{opacity:0;visibility:hidden}
+.load-count{font-family:var(--mono);font-size:clamp(2.5rem,12vw,7rem);color:var(--accent);letter-spacing:-.02em}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:1.4rem clamp(1.2rem,5vw,4rem);mix-blend-mode:difference}
+.brand{font-family:var(--mono);font-size:.8rem;letter-spacing:.05em;color:#fff}
+.nav-links{display:flex;gap:clamp(1rem,3vw,2.4rem);font-family:var(--mono);font-size:.78rem;color:#fff}
+.nav-links a{position:relative;opacity:.7;transition:opacity .25s}
+.nav-links a:hover{opacity:1}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:-4px;width:0;height:1px;background:#fff;transition:width .3s}
+.nav-links a:hover::after{width:100%}
+@media(max-width:600px){.nav-links a:not(.nav-cta){display:none}}
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:0 clamp(1.2rem,5vw,4rem);overflow:hidden}
+#cells{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+.hero-inner{position:relative;z-index:2;max-width:1400px}
+.eyebrow{font-family:var(--mono);font-size:.8rem;color:var(--accent);letter-spacing:.08em;margin-bottom:1.5rem;display:flex;align-items:center;gap:.6rem}
+.eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent)}
+.hero h1{font-family:var(--display);font-weight:600;font-size:clamp(2.8rem,9vw,8.5rem);line-height:.92;letter-spacing:-.03em}
+.hero h1 .line{display:block;overflow:hidden}
+.hero h1 .line span{display:inline-block;transform:translateY(110%);transition:transform .9s cubic-bezier(.16,1,.3,1)}
+.loaded .hero h1 .line span{transform:translateY(0)}
+.hero h1 .line:nth-child(2) span{transition-delay:.08s}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero-sub{margin-top:2rem;max-width:46ch;font-size:clamp(1rem,1.6vw,1.2rem);color:var(--muted);opacity:0;transform:translateY(20px);transition:all .8s ease .5s}
+.loaded .hero-sub{opacity:1;transform:translateY(0)}
+.hero-meta{position:absolute;bottom:2.2rem;left:clamp(1.2rem,5vw,4rem);right:clamp(1.2rem,5vw,4rem);z-index:2;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;font-family:var(--mono);font-size:.72rem;color:var(--muted);letter-spacing:.04em;opacity:0;transition:opacity 1s ease .9s}
+.loaded .hero-meta{opacity:1}
+.scroll-hint{display:flex;align-items:center;gap:.5rem}
+.scroll-hint .dot{width:5px;height:5px;border-radius:50%;background:var(--accent);animation:pulse 1.8s infinite}
+@keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
+section{padding:clamp(4rem,10vw,9rem) clamp(1.2rem,5vw,4rem);position:relative}
+.section-head{display:flex;align-items:baseline;gap:1rem;margin-bottom:3.5rem;border-bottom:1px solid var(--line-solid);padding-bottom:1.2rem}
+.section-num{font-family:var(--mono);font-size:.8rem;color:var(--accent)}
+.section-head h2{font-family:var(--display);font-weight:500;font-size:clamp(1.6rem,4vw,2.8rem);letter-spacing:-.02em}
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .8s ease,transform .8s cubic-bezier(.16,1,.3,1)}
+.reveal.in{opacity:1;transform:translateY(0)}
+.lead{font-family:var(--display);font-weight:400;font-size:clamp(1.5rem,3.6vw,2.6rem);line-height:1.25;letter-spacing:-.01em;max-width:22ch}
+.lead em{font-style:normal;color:var(--accent)}
+.about-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:clamp(2rem,6vw,5rem);align-items:start}
+.about-side p{color:var(--muted);margin-bottom:1.2rem;font-size:1.02rem}
+.tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.6rem}
+.tag{font-family:var(--mono);font-size:.72rem;color:var(--ink);border:1px solid var(--line-solid);border-radius:999px;padding:.4rem .85rem;transition:border-color .25s,color .25s}
+.tag:hover{border-color:var(--accent);color:var(--accent)}
+@media(max-width:760px){.about-grid{grid-template-columns:1fr}}
+.entry{display:grid;grid-template-columns:minmax(120px,180px) 1fr;gap:clamp(1rem,4vw,3rem);padding:2.2rem 0;border-top:1px solid var(--line-solid);transition:background .3s}
+.entry:hover{background:linear-gradient(90deg,rgba(61,255,192,.03),transparent)}
+.entry .when{font-family:var(--mono);font-size:.8rem;color:var(--muted)}
+.entry .role{font-family:var(--display);font-size:clamp(1.2rem,2.4vw,1.7rem);font-weight:500;letter-spacing:-.01em}
+.entry .org{color:var(--accent);font-size:.95rem;margin:.3rem 0 .9rem;font-family:var(--mono)}
+.entry .desc{color:var(--muted);max-width:62ch;font-size:1rem}
+.entry .desc ul{list-style:none;margin-top:.7rem}
+.entry .desc li{position:relative;padding-left:1.3rem;margin-bottom:.5rem}
+.entry .desc li::before{content:"\2192";position:absolute;left:0;color:var(--accent-dim)}
+@media(max-width:640px){.entry{grid-template-columns:1fr;gap:.6rem}}
+.pub{display:flex;gap:1.5rem;padding:1.6rem 0;border-top:1px solid var(--line-solid);align-items:baseline}
+.pub .year{font-family:var(--mono);font-size:.82rem;color:var(--accent);flex-shrink:0;width:3rem}
+.pub .pub-body{flex:1}
+.pub .pub-title{font-size:1.05rem;font-weight:500;margin-bottom:.25rem}
+.pub .pub-venue{color:var(--muted);font-size:.9rem;font-family:var(--mono)}
+.pub .pub-type{font-family:var(--mono);font-size:.68rem;color:var(--bg);background:var(--accent);padding:.15rem .5rem;border-radius:4px;flex-shrink:0;text-transform:uppercase;letter-spacing:.04em}
+.pub .pub-type.talk{background:var(--accent-dim);color:var(--ink)}
+.pub .pub-type.poster{background:#2a2f2c;color:var(--muted)}
+@media(max-width:640px){.pub{flex-wrap:wrap;gap:.6rem}}
+.skill-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(1.5rem,4vw,3rem)}
+.skill-group h3{font-family:var(--mono);font-size:.8rem;color:var(--accent);margin-bottom:1.2rem;letter-spacing:.05em;text-transform:uppercase}
+.skill-group ul{list-style:none}
+.skill-group li{padding:.55rem 0;border-bottom:1px solid var(--line-solid);font-size:.98rem;color:var(--ink);display:flex;justify-content:space-between;align-items:center}
+.skill-group li span{font-family:var(--mono);font-size:.68rem;color:var(--muted)}
+@media(max-width:760px){.skill-cols{grid-template-columns:1fr}}
+.contact{text-align:center;padding-block:clamp(5rem,14vw,11rem)}
+.contact .eyebrow{justify-content:center}
+.contact h2{font-family:var(--display);font-weight:600;font-size:clamp(2.2rem,8vw,6rem);letter-spacing:-.03em;line-height:1}
+.contact-email{display:inline-block;margin-top:2rem;font-family:var(--display);font-size:clamp(1.1rem,3vw,2rem);color:var(--accent);position:relative}
+.contact-email::after{content:"";position:absolute;left:0;bottom:-2px;width:100%;height:1px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .4s}
+.contact-email:hover::after{transform:scaleX(1)}
+.contact-links{display:flex;gap:1.6rem;justify-content:center;margin-top:2.5rem;font-family:var(--mono);font-size:.82rem;color:var(--muted)}
+.contact-links a:hover{color:var(--accent)}
+footer{padding:2rem clamp(1.2rem,5vw,4rem);border-top:1px solid var(--line-solid);display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;font-family:var(--mono);font-size:.72rem;color:var(--muted)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.hero h1 .line span{transform:none}.hero-sub,.hero-meta,.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div id="loader"><div class="load-count">00</div></div>
+<nav>
+  <a href="#top" class="brand">APM&#8260;</a>
+  <div class="nav-links">
+    <a href="#focus">Focus</a><a href="#experience">Experience</a><a href="#research">Research</a><a href="#skills">Skills</a><a href="#contact" class="nav-cta">Contact</a>
+  </div>
+</nav>
+<header class="hero" id="top">
+  <canvas id="cells"></canvas>
+  <div class="hero-inner">
+    <div class="eyebrow">Beaverton, Oregon &middot; Available 2026</div>
+    <h1>
+      <span class="line"><span>A. Julian</span></span>
+      <span class="line"><span>Pacheco <em>Mendez</em></span></span>
+    </h1>
+    <p class="hero-sub">Biomedical researcher in HIV/SIV immunology, building toward drug discovery at the intersection of computational biology, machine learning, and translational medicine.</p>
+  </div>
+  <div class="hero-meta">
+    <span>Biomedical Researcher &mdash; OHSU / VGTI</span>
+    <div class="scroll-hint"><span class="dot"></span>SCROLL</div>
+    <span>MS Data Science &mdash; Willamette &rsquo;26</span>
+  </div>
+</header>
+<section id="focus">
+  <div class="section-head"><span class="section-num">01</span><h2>Focus</h2></div>
+  <div class="about-grid">
+    <p class="lead reveal">I work where the <em>wet lab</em> meets the <em>data pipeline</em> &mdash; translating immunology into models that move therapy forward.</p>
+    <div class="about-side reveal">
+      <p>At OHSU's Vaccine and Gene Therapy Institute, my research centers on HIV/SIV immunology under Dr. Hiroshi Takata, with multiparameter flow cytometry work contributing to a Phase 1b clinical trial of long-acting antiretroviral therapy paired with broadly neutralizing antibodies.</p>
+      <p>Alongside the bench, I'm completing an MS in Data Science &mdash; building the computational and engineering toolkit to carry biology into discovery.</p>
+      <div class="tags">
+        <span class="tag">Immunology</span><span class="tag">Flow Cytometry</span><span class="tag">Machine Learning</span><span class="tag">Data Engineering</span><span class="tag">Translational Medicine</span>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="experience">
+  <div class="section-head"><span class="section-num">02</span><h2>Experience</h2></div>
+  <div class="entry reveal">
+    <div class="when">2019 &mdash; Present</div>
+    <div>
+      <div class="role">Biomedical Researcher</div>
+      <div class="org">OHSU &middot; Vaccine and Gene Therapy Institute</div>
+      <div class="desc">HIV/SIV immunology under the mentorship of Dr. Hiroshi Takata, across the Trautmann and Okoye labs.
+        <ul>
+          <li>Designed and ran CFSE proliferation, intracellular cytokine staining, and multiparameter flow cytometry assays</li>
+          <li>Contributions featured in a Gilead-funded Phase 1b trial of long-acting therapy with broadly neutralizing antibodies (FDA Breakthrough Therapy, 2025)</li>
+          <li>Built lab data tools &mdash; searchable freezer inventory, sample-tracking schemas, automated reporting</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="entry reveal">
+    <div class="when">2024 &mdash; 2026</div>
+    <div>
+      <div class="role">MS, Data Science</div>
+      <div class="org">Willamette University &middot; SCIS</div>
+      <div class="desc">Graduate study in data science with a focus on the engineering and modeling stack behind reproducible research.
+        <ul>
+          <li>Capstone: county-level housing affordability &mdash; panel regression, k-means clustering, and neural-network modeling across U.S. counties, 2008&ndash;2023</li>
+          <li>Production data pipelines with Airflow, DuckDB, PostgreSQL, and S3-compatible lakes</li>
+          <li>ML coursework spanning NLP, classification, and applied deep learning</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="entry reveal">
+    <div class="when">Prior</div>
+    <div>
+      <div class="role">Biological Field Technician</div>
+      <div class="org">Bureau of Land Management &middot; via Oregon State University</div>
+      <div class="desc">Field ecology and wildlife data collection under Wildlife Biologist Kimberly Haab, with contributions featured in published conservation research.</div>
+    </div>
+  </div>
+</section>
+<section id="research">
+  <div class="section-head"><span class="section-num">03</span><h2>Research &amp; Presentations</h2></div>
+  <div class="pub reveal"><div class="year">2026</div><div class="pub-body"><div class="pub-title">HIV/SIV immunology &mdash; broadly neutralizing antibody response</div><div class="pub-venue">Keystone Symposia</div></div><span class="pub-type poster">Poster</span></div>
+  <div class="pub reveal"><div class="year">2025</div><div class="pub-body"><div class="pub-title">Cai et al. &mdash; antibody-mediated immune response in HIV (#OAA0205)</div><div class="pub-venue">IAS 2025, Kigali &middot; contributions featured</div></div><span class="pub-type talk">Oral</span></div>
+  <div class="pub reveal"><div class="year">2025</div><div class="pub-body"><div class="pub-title">SIV immunology &mdash; flow cytometry characterization</div><div class="pub-venue">CROI 2025 &middot; contributions featured</div></div><span class="pub-type poster">Poster</span></div>
+  <div class="pub reveal"><div class="year">2023</div><div class="pub-body"><div class="pub-title">Takata et al. &mdash; HIV-specific immune response characterization</div><div class="pub-venue">Cell Host &amp; Microbe &middot; co-author</div></div><span class="pub-type">Paper</span></div>
+  <div class="pub reveal"><div class="year">2023</div><div class="pub-body"><div class="pub-title">SIV immunology poster</div><div class="pub-venue">CROI 2023 &middot; contributions featured</div></div><span class="pub-type poster">Poster</span></div>
+  <div class="pub reveal"><div class="year">2024</div><div class="pub-body"><div class="pub-title">Haab et al. &mdash; conservation ecology</div><div class="pub-venue">Global Ecology and Conservation &middot; co-author</div></div><span class="pub-type">Paper</span></div>
+</section>
+<section id="skills">
+  <div class="section-head"><span class="section-num">04</span><h2>Toolkit</h2></div>
+  <div class="skill-cols">
+    <div class="skill-group reveal"><h3>Wet Lab &amp; Immunology</h3><ul>
+      <li>Multiparameter flow cytometry <span>core</span></li>
+      <li>Intracellular cytokine staining <span>core</span></li>
+      <li>CFSE proliferation assays <span>core</span></li>
+      <li>AIM / ICS assays <span>core</span></li>
+      <li>Clinical trial sample workflows <span>core</span></li>
+    </ul></div>
+    <div class="skill-group reveal"><h3>Data &amp; ML</h3><ul>
+      <li>Python <span>core</span></li>
+      <li>PostgreSQL / DuckDB <span>core</span></li>
+      <li>scikit-learn / XGBoost <span>core</span></li>
+      <li>TensorFlow <span>in progress</span></li>
+      <li>R / Shiny <span>core</span></li>
+    </ul></div>
+    <div class="skill-group reveal"><h3>Engineering</h3><ul>
+      <li>Apache Airflow <span>core</span></li>
+      <li>Docker <span>core</span></li>
+      <li>Flask / SQLAlchemy <span>core</span></li>
+      <li>Git / CI <span>core</span></li>
+      <li>Cloud deploy (Railway) <span>core</span></li>
+    </ul></div>
+  </div>
+</section>
+<section class="contact" id="contact">
+  <div class="eyebrow">Open to opportunities</div>
+  <h2>Let's build<br>something.</h2>
+  <a href="mailto:hello@julian-pacheco.com" class="contact-email">hello@julian-pacheco.com</a>
+  <div class="contact-links">
+    <a href="https://github.com/apacheco26" target="_blank" rel="noopener">GitHub &#8599;</a>
+    <!-- TODO: replace # with your real LinkedIn URL -->
+    <a href="#" target="_blank" rel="noopener">LinkedIn &#8599;</a>
+    <!-- TODO: replace # with your Google Scholar profile URL (or remove this line) -->
+    <a href="#" target="_blank" rel="noopener">Google Scholar &#8599;</a>
+  </div>
+</section>
+<footer><span>&copy; 2026 A. Julian Pacheco Mendez</span><span>Portland, Oregon</span></footer>
+<script>
+const loader=document.getElementById('loader');
+const count=loader.querySelector('.load-count');
+let n=0;
+const tick=setInterval(()=>{n+=Math.floor(Math.random()*18)+4;if(n>=100){n=100;clearInterval(tick);count.textContent='100';setTimeout(()=>{loader.classList.add('done');document.body.classList.add('loaded');},350);}count.textContent=String(n).padStart(2,'0');},90);
+const io=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+const canvas=document.getElementById('cells');const ctx=canvas.getContext('2d');let W,H,points=[];
+const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+function size(){W=canvas.width=canvas.offsetWidth*devicePixelRatio;H=canvas.height=canvas.offsetHeight*devicePixelRatio;}
+function seed(){points=[];const c=Math.min(90,Math.floor(W*H/26000));for(let i=0;i<c;i++){const cl=Math.random();let cx,cy;if(cl<.4){cx=W*.7;cy=H*.55;}else if(cl<.7){cx=W*.3;cy=H*.4;}else{cx=Math.random()*W;cy=Math.random()*H;}points.push({x:cl<.7?cx+(Math.random()-.5)*W*.35:cx,y:cl<.7?cy+(Math.random()-.5)*H*.35:cy,vx:(Math.random()-.5)*.12,vy:(Math.random()-.5)*.12,r:(Math.random()*1.6+.6)*devicePixelRatio,a:Math.random()*.5+.15});}}
+function draw(){ctx.clearRect(0,0,W,H);for(let i=0;i<points.length;i++){const p=points[i];for(let j=i+1;j<points.length;j++){const q=points[j];const d=Math.hypot(p.x-q.x,p.y-q.y);if(d<110*devicePixelRatio){ctx.strokeStyle=`rgba(61,255,192,${.05*(1-d/(110*devicePixelRatio))})`;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.stroke();}}}points.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=`rgba(61,255,192,${p.a})`;ctx.fill();});if(!reduce)requestAnimationFrame(draw);}
+function init(){size();seed();draw();}
+window.addEventListener('resize',()=>{size();seed();});
+init();
+</script>
+</body>
+</html>
