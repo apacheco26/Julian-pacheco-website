@@ -19,9 +19,14 @@ html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--ink);font-family:var(--body);-webkit-font-smoothing:antialiased;line-height:1.5;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
 ::selection{background:var(--accent);color:var(--bg)}
-#loader{position:fixed;inset:0;z-index:1000;background:var(--bg);display:flex;align-items:center;justify-content:center;transition:opacity .6s ease,visibility .6s ease}
-#loader.done{opacity:0;visibility:hidden}
-.load-count{font-family:var(--mono);font-size:clamp(2.5rem,12vw,7rem);color:var(--accent);letter-spacing:-.02em}
+#loader{position:fixed;inset:0;z-index:1000;background:var(--bg);display:flex;align-items:center;justify-content:center;transition:transform .8s cubic-bezier(.76,0,.24,1);pointer-events:all}
+#loader.done{transform:translateY(-100%);pointer-events:none}
+.boot-inner{display:flex;flex-direction:column;gap:2.5rem;padding:0 clamp(1.2rem,5vw,4rem);width:100%;max-width:900px}
+.boot-counter{font-family:var(--mono);font-size:clamp(5rem,18vw,11rem);color:var(--accent);letter-spacing:-.04em;line-height:1}
+.boot-lines{display:flex;flex-direction:column;gap:.5rem}
+.boot-line{font-family:var(--mono);font-size:.85rem;letter-spacing:.06em;color:var(--muted);opacity:0;transform:translateY(8px);transition:opacity .4s ease,transform .4s ease}
+.boot-line.show{opacity:1;transform:translateY(0)}
+.boot-line.active{color:var(--accent)}
 nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:1.4rem clamp(1.2rem,5vw,4rem);mix-blend-mode:difference}
 .brand{font-family:var(--mono);font-size:.8rem;letter-spacing:.05em;color:#fff}
 .nav-links{display:flex;gap:clamp(1rem,3vw,2.4rem);font-family:var(--mono);font-size:.78rem;color:#fff}
@@ -100,17 +105,27 @@ footer{padding:2rem clamp(1.2rem,5vw,4rem);border-top:1px solid var(--line-solid
 </style>
 </head>
 <body>
-<div id="loader"><div class="load-count">00</div></div>
+<div id="loader" aria-label="Loading">
+  <div class="boot-inner">
+    <div class="boot-counter">00</div>
+    <div class="boot-lines">
+      <div class="boot-line">initializing</div>
+      <div class="boot-line">loading research profile</div>
+      <div class="boot-line">hiv / siv immunology &middot; data science</div>
+      <div class="boot-line">ready</div>
+    </div>
+  </div>
+</div>
 <nav>
   <a href="#top" class="brand">APM&#8260;</a>
   <div class="nav-links">
-    <a href="#focus">Focus</a><a href="#experience">Experience</a><a href="#research">Research</a><a href="#skills">Skills</a><a href="#contact" class="nav-cta">Contact</a>
+    <a href="#focus">Focus</a><a href="#experience">Experience</a><a href="#education">Education</a><a href="#research">Research</a><a href="#skills">Skills</a><a href="#contact" class="nav-cta">Contact</a>
   </div>
 </nav>
 <header class="hero" id="top">
   <canvas id="cells"></canvas>
   <div class="hero-inner">
-    <div class="eyebrow">Beaverton, Oregon &middot; Available 2026</div>
+    <div class="eyebrow">Beaverton, Oregon</div>
     <h1>
       <span class="line"><span>A. Julian</span></span>
       <span class="line"><span>Pacheco <em>Mendez</em></span></span>
@@ -128,8 +143,7 @@ footer{padding:2rem clamp(1.2rem,5vw,4rem);border-top:1px solid var(--line-solid
   <div class="about-grid">
     <p class="lead reveal">I work where the <em>wet lab</em> meets the <em>data pipeline</em> &mdash; translating immunology into models that move therapy forward.</p>
     <div class="about-side reveal">
-      <p>At OHSU's Vaccine and Gene Therapy Institute, my research centers on HIV/SIV immunology under Dr. Hiroshi Takata, with multiparameter flow cytometry work contributing to a Phase 1b clinical trial of long-acting antiretroviral therapy paired with broadly neutralizing antibodies.</p>
-      <p>Alongside the bench, I'm completing an MS in Data Science &mdash; building the computational and engineering toolkit to carry biology into discovery.</p>
+      <p>Biomedical researcher with four years in HIV/SIV immunology at OHSU's Vaccine and Gene Therapy Institute, now completing an MS in Data Science. My work spans human HIV immunology and non-human primate SIV models, conducted under the mentorship of Dr. Hiroshi Takata across Dr. Lydie Trautmann's and Dr. Afam Okoye's labs, with recent collaboration with Dr. David Ho's team at Columbia University. My future focus is drug discovery, using machine learning to accelerate identification of novel therapeutic candidates at the intersection of computational biology and translational medicine.</p>
       <div class="tags">
         <span class="tag">Immunology</span><span class="tag">Flow Cytometry</span><span class="tag">Machine Learning</span><span class="tag">Data Engineering</span><span class="tag">Translational Medicine</span>
       </div>
@@ -139,53 +153,101 @@ footer{padding:2rem clamp(1.2rem,5vw,4rem);border-top:1px solid var(--line-solid
 <section id="experience">
   <div class="section-head"><span class="section-num">02</span><h2>Experience</h2></div>
   <div class="entry reveal">
-    <div class="when">2019 &mdash; Present</div>
+    <div class="when">2021 &mdash; Present</div>
     <div>
-      <div class="role">Biomedical Researcher</div>
-      <div class="org">OHSU &middot; Vaccine and Gene Therapy Institute</div>
-      <div class="desc">HIV/SIV immunology under the mentorship of Dr. Hiroshi Takata, across the Trautmann and Okoye labs.
-        <ul>
-          <li>Designed and ran CFSE proliferation, intracellular cytokine staining, and multiparameter flow cytometry assays</li>
-          <li>Contributions featured in a Gilead-funded Phase 1b trial of long-acting therapy with broadly neutralizing antibodies (FDA Breakthrough Therapy, 2025)</li>
-          <li>Built lab data tools &mdash; searchable freezer inventory, sample-tracking schemas, automated reporting</li>
-        </ul>
-      </div>
+      <div class="role">Research Assistant</div>
+      <div class="org">OHSU &middot; Vaccine and Gene Therapy Institute &middot; Beaverton, OR</div>
+      <div class="desc"><ul>
+        <li>Generated and analyzed high-dimensional flow cytometry datasets across human and non-human primate models, building multiparameter pipelines (gating, titration, downstream quantification) feeding publications, presentations, and grant reporting</li>
+        <li>Produced longitudinal immune response data for a Gilead-funded Phase 1b trial (NCT04811040) of lenacapavir with teropavimab and zinlirvimab, an FDA Breakthrough Therapy-designated regimen now in Phase 2; quantified CD4+/CD8+ T cell responses across 52 weeks, contributing analysis presented at IAS 2025</li>
+        <li>Performed quantitative immunophenotyping on patient cohort samples (RV254/SEARCH010, Thailand) across acute and chronic infection, characterizing T cell and NK activation, memory, and function</li>
+        <li>Designed longitudinal multi-tissue NHP experiments, structuring time-series datasets (viral load, cytokine, cell-associated RNA/DNA) to model SIV reservoir dynamics under treatment</li>
+        <li>Evaluated therapeutic candidates through dose titration experiments, generating dose-response data on latency reversal agents and a novel IL-15 immunotherapy</li>
+      </ul></div>
     </div>
   </div>
+  <div class="entry reveal">
+    <div class="when">2020</div>
+    <div>
+      <div class="role">Biological Field Technician (Contract)</div>
+      <div class="org">Bureau of Land Management &middot; via Oregon State University &middot; Lakeview, OR</div>
+      <div class="desc"><ul>
+        <li>Supported the Warner Mountains Greater Sage Grouse and juniper removal study under Wildlife Biologist Kimberly Haab; contributed to findings published in Global Ecology and Conservation (Haab et al., 2024)</li>
+        <li>Executed vegetation and soil sampling across remote public lands; conducted sage grouse monitoring via radio telemetry, nest assessments, and brood counts</li>
+      </ul></div>
+    </div>
+  </div>
+</section>
+<section id="education">
+  <div class="section-head"><span class="section-num">03</span><h2>Education</h2></div>
   <div class="entry reveal">
     <div class="when">2024 &mdash; 2026</div>
     <div>
-      <div class="role">MS, Data Science</div>
-      <div class="org">Willamette University &middot; SCIS</div>
-      <div class="desc">Graduate study in data science with a focus on the engineering and modeling stack behind reproducible research.
-        <ul>
-          <li>Capstone: county-level housing affordability &mdash; panel regression, k-means clustering, and neural-network modeling across U.S. counties, 2008&ndash;2023</li>
-          <li>Production data pipelines with Airflow, DuckDB, PostgreSQL, and S3-compatible lakes</li>
-          <li>ML coursework spanning NLP, classification, and applied deep learning</li>
-        </ul>
-      </div>
+      <div class="role">M.S., Data Science</div>
+      <div class="org">Willamette University &middot; Salem, OR</div>
     </div>
   </div>
   <div class="entry reveal">
-    <div class="when">Prior</div>
+    <div class="when">2017</div>
     <div>
-      <div class="role">Biological Field Technician</div>
-      <div class="org">Bureau of Land Management &middot; via Oregon State University</div>
-      <div class="desc">Field ecology and wildlife data collection under Wildlife Biologist Kimberly Haab, with contributions featured in published conservation research.</div>
+      <div class="role">B.S., Biology</div>
+      <div class="org">Portland State University &middot; Portland, OR</div>
     </div>
   </div>
 </section>
 <section id="research">
-  <div class="section-head"><span class="section-num">03</span><h2>Research &amp; Presentations</h2></div>
-  <div class="pub reveal"><div class="year">2026</div><div class="pub-body"><div class="pub-title">HIV/SIV immunology &mdash; broadly neutralizing antibody response</div><div class="pub-venue">Keystone Symposia</div></div><span class="pub-type poster">Poster</span></div>
-  <div class="pub reveal"><div class="year">2025</div><div class="pub-body"><div class="pub-title">Cai et al. &mdash; antibody-mediated immune response in HIV (#OAA0205)</div><div class="pub-venue">IAS 2025, Kigali &middot; contributions featured</div></div><span class="pub-type talk">Oral</span></div>
-  <div class="pub reveal"><div class="year">2025</div><div class="pub-body"><div class="pub-title">SIV immunology &mdash; flow cytometry characterization</div><div class="pub-venue">CROI 2025 &middot; contributions featured</div></div><span class="pub-type poster">Poster</span></div>
-  <div class="pub reveal"><div class="year">2023</div><div class="pub-body"><div class="pub-title">Takata et al. &mdash; HIV-specific immune response characterization</div><div class="pub-venue">Cell Host &amp; Microbe &middot; co-author</div></div><span class="pub-type">Paper</span></div>
-  <div class="pub reveal"><div class="year">2023</div><div class="pub-body"><div class="pub-title">SIV immunology poster</div><div class="pub-venue">CROI 2023 &middot; contributions featured</div></div><span class="pub-type poster">Poster</span></div>
-  <div class="pub reveal"><div class="year">2024</div><div class="pub-body"><div class="pub-title">Haab et al. &mdash; conservation ecology</div><div class="pub-venue">Global Ecology and Conservation &middot; co-author</div></div><span class="pub-type">Paper</span></div>
+  <div class="section-head"><span class="section-num">04</span><h2>Research &amp; Presentations</h2></div>
+  <div class="pub reveal">
+    <div class="year">2023</div>
+    <div class="pub-body">
+      <div class="pub-title">Takata H, Mitchell JL, <strong>Pacheco J</strong>, et al. &ldquo;An active HIV reservoir during ART is associated with maintenance of HIV-specific CD8+ T cell magnitude and short-lived differentiation status.&rdquo;</div>
+      <div class="pub-venue">Cell Host &amp; Microbe, 31(9):1494&ndash;1506.e4</div>
+    </div>
+    <span class="pub-type">Paper</span>
+  </div>
+  <div class="pub reveal">
+    <div class="year">2025</div>
+    <div class="pub-body">
+      <div class="pub-title">Cai Y, Takata H, Ferreira AM, <strong>Pacheco Mendez J</strong>, et al. &ldquo;HIV-Specific T Cell Responses in Suppressed People with HIV-1 Receiving Lenacapavir, Teropavimab, and Zinlirvimab.&rdquo; Contributions featured.</div>
+      <div class="pub-venue">IAS 2025, Kigali, Rwanda &middot; #OAA0205</div>
+    </div>
+    <span class="pub-type talk">Oral</span>
+  </div>
+  <div class="pub reveal">
+    <div class="year">2026</div>
+    <div class="pub-body">
+      <div class="pub-title">Takata H, <strong>Pacheco J</strong>, et al. &ldquo;RV550: IL-15 Superagonist N-803 at ART Interruption Enhances NK and T Cell Proliferation and Activation Prior to Viral Rebound.&rdquo; Contributions featured.</div>
+      <div class="pub-venue">Keystone Symposia &mdash; HIV Persistence, Remission, and Cure &middot; Breckenridge, CO</div>
+    </div>
+    <span class="pub-type poster">Poster</span>
+  </div>
+  <div class="pub reveal">
+    <div class="year">2025</div>
+    <div class="pub-body">
+      <div class="pub-title">Takata H, <strong>Pacheco J</strong>, et al. &ldquo;RV550: IL-15 Superagonist N-803 With ART in Acute HIV Infection Enhances T and NK Cell Proliferation.&rdquo; Contributions featured.</div>
+      <div class="pub-venue">CROI 2025, San Francisco, CA &middot; #0444</div>
+    </div>
+    <span class="pub-type poster">Poster</span>
+  </div>
+  <div class="pub reveal">
+    <div class="year">2025</div>
+    <div class="pub-body">
+      <div class="pub-title">Varco-Merth B, Marino A, Takata H, <strong>Pacheco J</strong>, et al. &ldquo;IL-15 Superagonist at ART Initiation Expands SIV-Specific CD8+ T Cells in Blood and Lymphoid Tissues.&rdquo; Contributions featured.</div>
+      <div class="pub-venue">CROI 2025, San Francisco, CA &middot; #309</div>
+    </div>
+    <span class="pub-type poster">Poster</span>
+  </div>
+  <div class="pub reveal">
+    <div class="year">2023</div>
+    <div class="pub-body">
+      <div class="pub-title">Mitchell J, Subra C, <strong>A. Julian Pacheco Mendez</strong>, et al. &ldquo;Compartmentalized Clonal Expansions of CD8+ T Cells in CSF During Acute HIV Infection.&rdquo; Contributions featured.</div>
+      <div class="pub-venue">CROI 2023 (Virtual)</div>
+    </div>
+    <span class="pub-type poster">Poster</span>
+  </div>
 </section>
 <section id="skills">
-  <div class="section-head"><span class="section-num">04</span><h2>Toolkit</h2></div>
+  <div class="section-head"><span class="section-num">05</span><h2>Toolkit</h2></div>
   <div class="skill-cols">
     <div class="skill-group reveal"><h3>Wet Lab &amp; Immunology</h3><ul>
       <li>Multiparameter flow cytometry <span>core</span></li>
@@ -204,34 +266,73 @@ footer{padding:2rem clamp(1.2rem,5vw,4rem);border-top:1px solid var(--line-solid
     <div class="skill-group reveal"><h3>Engineering</h3><ul>
       <li>Apache Airflow <span>core</span></li>
       <li>Docker <span>core</span></li>
-      <li>Flask / SQLAlchemy <span>core</span></li>
       <li>Git / CI <span>core</span></li>
-      <li>Cloud deploy (Railway) <span>core</span></li>
     </ul></div>
   </div>
 </section>
 <section class="contact" id="contact">
   <div class="eyebrow">Open to opportunities</div>
   <h2>Let's build<br>something.</h2>
-  <a href="mailto:hello@julian-pacheco.com" class="contact-email">hello@julian-pacheco.com</a>
+  <a href="mailto:apacheco26@outlook.com" class="contact-email">apacheco26@outlook.com</a>
   <div class="contact-links">
     <a href="https://github.com/apacheco26" target="_blank" rel="noopener">GitHub &#8599;</a>
-    <!-- TODO: replace # with your real LinkedIn URL -->
-    <a href="#" target="_blank" rel="noopener">LinkedIn &#8599;</a>
-    <!-- TODO: replace # with your Google Scholar profile URL (or remove this line) -->
-    <a href="#" target="_blank" rel="noopener">Google Scholar &#8599;</a>
   </div>
 </section>
 <footer><span>&copy; 2026 A. Julian Pacheco Mendez</span><span>Portland, Oregon</span></footer>
 <script>
-const loader=document.getElementById('loader');
-const count=loader.querySelector('.load-count');
-let n=0;
-const tick=setInterval(()=>{n+=Math.floor(Math.random()*18)+4;if(n>=100){n=100;clearInterval(tick);count.textContent='100';setTimeout(()=>{loader.classList.add('done');document.body.classList.add('loaded');},350);}count.textContent=String(n).padStart(2,'0');},90);
-const io=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.15});
-document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-const canvas=document.getElementById('cells');const ctx=canvas.getContext('2d');let W,H,points=[];
-const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// Boot sequence
+const loader = document.getElementById('loader');
+const bootCount = loader.querySelector('.boot-counter');
+const bootLines = loader.querySelectorAll('.boot-line');
+
+function revealPage() {
+  loader.classList.add('done');
+  loader.setAttribute('aria-hidden', 'true');
+  document.body.classList.add('loaded');
+}
+
+if (reduce) {
+  loader.style.display = 'none';
+  document.body.classList.add('loaded');
+} else {
+  // Show first three lines during the counter run
+  [0, 400, 900].forEach((delay, i) => {
+    setTimeout(() => bootLines[i].classList.add('show'), delay);
+  });
+
+  // Counter eases over 2 seconds
+  const duration = 2000;
+  const t0 = performance.now();
+  function tick(now) {
+    const p = Math.min((now - t0) / duration, 1);
+    const eased = 1 - Math.pow(1 - p, 2);
+    bootCount.textContent = String(Math.floor(eased * 100)).padStart(2, '0');
+    if (p < 1) {
+      requestAnimationFrame(tick);
+    } else {
+      bootCount.textContent = '100';
+      bootLines[3].classList.add('show', 'active');
+      setTimeout(revealPage, 700);
+    }
+  }
+  requestAnimationFrame(tick);
+
+  // Fallback in case something stalls
+  setTimeout(() => { if (!document.body.classList.contains('loaded')) revealPage(); }, 4000);
+}
+
+// Scroll reveal
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+}, {threshold: .15});
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+// Canvas animation
+const canvas = document.getElementById('cells');
+const ctx = canvas.getContext('2d');
+let W, H, points = [];
 function size(){W=canvas.width=canvas.offsetWidth*devicePixelRatio;H=canvas.height=canvas.offsetHeight*devicePixelRatio;}
 function seed(){points=[];const c=Math.min(90,Math.floor(W*H/26000));for(let i=0;i<c;i++){const cl=Math.random();let cx,cy;if(cl<.4){cx=W*.7;cy=H*.55;}else if(cl<.7){cx=W*.3;cy=H*.4;}else{cx=Math.random()*W;cy=Math.random()*H;}points.push({x:cl<.7?cx+(Math.random()-.5)*W*.35:cx,y:cl<.7?cy+(Math.random()-.5)*H*.35:cy,vx:(Math.random()-.5)*.12,vy:(Math.random()-.5)*.12,r:(Math.random()*1.6+.6)*devicePixelRatio,a:Math.random()*.5+.15});}}
 function draw(){ctx.clearRect(0,0,W,H);for(let i=0;i<points.length;i++){const p=points[i];for(let j=i+1;j<points.length;j++){const q=points[j];const d=Math.hypot(p.x-q.x,p.y-q.y);if(d<110*devicePixelRatio){ctx.strokeStyle=`rgba(61,255,192,${.05*(1-d/(110*devicePixelRatio))})`;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.stroke();}}}points.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=`rgba(61,255,192,${p.a})`;ctx.fill();});if(!reduce)requestAnimationFrame(draw);}
