@@ -112,20 +112,21 @@ footer{padding:2rem clamp(1.2rem,5vw,4rem);border-top:1px solid var(--line-solid
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.hero h1 .line span{transform:none}.hero-sub,.hero-meta,.reveal{opacity:1;transform:none}.boot-name{opacity:1;transform:none}}
 
 /* ── Intro rotator ──────────────────────────────────────────── */
-#intro{position:fixed;inset:0;z-index:999;background:#0d1117;display:flex;align-items:center;justify-content:center;transition:transform .9s cubic-bezier(.76,0,.24,1);pointer-events:none}
+#intro{position:fixed;inset:0;z-index:999;background:#0d1117;display:flex;align-items:stretch;transition:transform .9s cubic-bezier(.76,0,.24,1);pointer-events:none}
 #intro.phase2{pointer-events:all}
 #intro.done{transform:translateY(-100%);pointer-events:none}
-.intro-rotator{text-align:center;padding:2rem;max-width:90vw}
-.intro-lead-wrap{position:relative;height:1.8em;margin-bottom:1.4rem;display:flex;align-items:center;justify-content:center}
-.intro-lead{position:absolute;font-family:var(--mono);font-size:clamp(.75rem,1.6vw,.9rem);letter-spacing:.18em;color:rgba(255,255,255,.45);text-transform:lowercase;white-space:nowrap;transition:opacity .6s ease}
+.intro-left{width:42%;flex-shrink:0;display:flex;align-items:center;justify-content:center;padding:3rem;border-right:1px solid rgba(255,255,255,.06)}
+.intro-lead-wrap{display:grid;justify-items:center}
+.intro-lead{grid-area:1/1;font-family:var(--mono);font-size:clamp(.8rem,1.7vw,.95rem);letter-spacing:.18em;color:rgba(255,255,255,.5);text-transform:lowercase;white-space:nowrap;transition:opacity .6s ease}
 #intro-lead-p2{opacity:0}
-.intro-stage{display:flex;align-items:center;justify-content:center;min-height:clamp(5rem,15vw,12rem)}
-.intro-gerund{font-family:var(--display);font-size:clamp(2.8rem,9vw,7.5rem);font-weight:700;color:var(--muted);transition:opacity .28s ease;white-space:nowrap}
-.intro-nav{display:none;flex-wrap:wrap;justify-content:center;gap:clamp(.3rem,1.2vw,.8rem) clamp(.8rem,2.5vw,2rem);opacity:0;transition:opacity .5s ease}
+.intro-right-panel{flex:1;display:flex;align-items:center;padding:3rem clamp(2rem,5vw,4rem)}
+.intro-stage{display:flex;align-items:center}
+.intro-gerund{font-family:var(--display);font-size:clamp(2.5rem,6vw,5.5rem);font-weight:700;color:#ff2020;transition:opacity .28s ease;white-space:nowrap}
+.intro-nav{display:none;flex-direction:column;align-items:flex-start;gap:clamp(.15rem,.6vw,.4rem);opacity:0;transition:opacity .5s ease}
 .intro-nav.visible{opacity:1;pointer-events:all}
-.intro-nav-item{font-family:var(--display);font-size:clamp(1.8rem,5vw,4.5rem);font-weight:700;color:rgba(255,255,255,.2);cursor:pointer;text-decoration:none;transition:color .3s ease;line-height:1.1}
+.intro-nav-item{font-family:var(--display);font-size:clamp(1.8rem,4.5vw,4rem);font-weight:700;color:rgba(255,255,255,.2);cursor:pointer;text-decoration:none;transition:color .3s ease;line-height:1.15}
 .intro-nav-item.active{color:var(--accent)}
-.intro-nav-item:hover:not(.active){color:rgba(255,255,255,.6)}
+.intro-nav-item:hover:not(.active){color:rgba(255,255,255,.55)}
 
 /* ── Hero icon strip ────────────────────────────────────────── */
 .hero-icons{display:flex;align-items:stretch;flex-wrap:wrap;gap:0;margin-top:2.8rem;opacity:0;transform:translateY(20px);transition:opacity .8s ease .7s,transform .8s cubic-bezier(.16,1,.3,1) .7s}
@@ -195,11 +196,13 @@ footer{padding:2rem clamp(1.2rem,5vw,4rem);border-top:1px solid var(--line-solid
   </div>
 </div>
 <div id="intro">
-  <div class="intro-rotator">
+  <div class="intro-left">
     <div class="intro-lead-wrap">
       <span class="intro-lead" id="intro-lead-p1">this is me&hellip;</span>
       <span class="intro-lead" id="intro-lead-p2">here&rsquo;s my&hellip;</span>
     </div>
+  </div>
+  <div class="intro-right-panel">
     <div class="intro-stage">
       <span class="intro-gerund" id="intro-gerund">watching futbol</span>
       <nav class="intro-nav" id="intro-nav">
