@@ -71,12 +71,8 @@ section{padding:clamp(4rem,10vw,9rem) clamp(1.2rem,5vw,4rem);position:relative;z
 .reveal.in{opacity:1;transform:translateY(0)}
 .lead{font-family:var(--display);font-weight:400;font-size:clamp(1.5rem,3.6vw,2.6rem);line-height:1.25;letter-spacing:-.01em;max-width:22ch}
 .lead em{font-style:normal;color:var(--accent)}
-.about-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:clamp(2rem,6vw,5rem);align-items:start}
-.about-side p{color:var(--muted);margin-bottom:1.2rem;font-size:1.02rem}
-.tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.6rem}
-.tag{font-family:var(--mono);font-size:.72rem;color:var(--ink);border:1px solid var(--line-solid);border-radius:999px;padding:.4rem .85rem;transition:border-color .25s,color .25s}
-.tag:hover{border-color:var(--accent);color:var(--accent)}
-@media(max-width:760px){.about-grid{grid-template-columns:1fr}}
+.about-center{max-width:72ch;margin:0 auto;text-align:center}
+.about-center p{color:var(--muted);font-size:1.05rem;line-height:1.75}
 .entry{display:grid;grid-template-columns:minmax(120px,180px) 1fr;gap:clamp(1rem,4vw,3rem);padding:2.2rem 0;border-top:1px solid var(--line-solid);transition:background .3s}
 .entry:hover{background:linear-gradient(90deg,rgba(61,255,192,.03),transparent)}
 .entry .when{font-family:var(--mono);font-size:.8rem;color:var(--muted)}
@@ -262,14 +258,8 @@ html{scroll-snap-type:y mandatory}
 </header>
 <section id="focus">
   <div class="section-head"><span class="section-num">01</span><h2>Focus</h2></div>
-  <div class="about-grid">
-    <p class="lead reveal">I work where the <em>wet lab</em> meets the <em>data pipeline</em> &mdash; translating immunology into models that move therapy forward.</p>
-    <div class="about-side reveal">
-      <p>Biomedical researcher with four years in HIV/SIV immunology at OHSU's Vaccine and Gene Therapy Institute, now completing an MS in Data Science. My work spans human HIV immunology and non-human primate SIV models, conducted under the mentorship of Dr. Hiroshi Takata across Dr. Lydie Trautmann's and Dr. Afam Okoye's labs, with recent collaboration with Dr. David Ho's team at Columbia University. My future focus is drug discovery, using machine learning to accelerate identification of novel therapeutic candidates at the intersection of computational biology and translational medicine.</p>
-      <div class="tags">
-        <span class="tag">Immunology</span><span class="tag">Flow Cytometry</span><span class="tag">Machine Learning</span><span class="tag">Data Engineering</span><span class="tag">Translational Medicine</span>
-      </div>
-    </div>
+  <div class="about-center reveal">
+    <p>Biomedical researcher with four years in HIV/SIV immunology at OHSU's Vaccine and Gene Therapy Institute, now completing an MS in Data Science. My work spans human HIV immunology and non-human primate SIV models, conducted under the mentorship of Dr. Hiroshi Takata across Dr. Lydie Trautmann's and Dr. Afam Okoye's labs, with recent collaboration with Dr. David Ho's team at Columbia University. My future focus is drug discovery, using machine learning to accelerate identification of novel therapeutic candidates at the intersection of computational biology and translational medicine.</p>
   </div>
 </section>
 <section id="experience">
