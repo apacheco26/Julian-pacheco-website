@@ -50,13 +50,13 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content
 .hero-inner{position:relative;z-index:2;max-width:1400px}
 .eyebrow{font-family:var(--mono);font-size:.8rem;color:var(--accent);letter-spacing:.08em;margin-bottom:1.5rem;display:flex;align-items:center;gap:.6rem}
 .eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent)}
-.hero h1{font-family:var(--display);font-weight:600;font-size:clamp(2.8rem,9vw,8.5rem);line-height:.92;letter-spacing:-.03em}
+.hero h1{font-family:var(--display);font-weight:600;font-size:clamp(3.8rem,20vw,18rem);line-height:.9;letter-spacing:-.04em}
 .hero h1 .line{display:block;overflow:hidden}
 .hero h1 .line span{display:inline-block;transform:translateY(110%);transition:transform .9s cubic-bezier(.16,1,.3,1)}
 .loaded .hero h1 .line span{transform:translateY(0)}
 .hero h1 .line:nth-child(2) span{transition-delay:.08s}
 .hero h1 em{font-style:normal;color:var(--accent)}
-.hero-sub{margin-top:2rem;max-width:46ch;font-size:clamp(1rem,1.6vw,1.2rem);color:var(--muted);opacity:0;transform:translateY(20px);transition:all .8s ease .5s}
+.hero-sub{margin-top:2.8rem;max-width:52ch;font-size:clamp(1rem,1.6vw,1.25rem);color:var(--muted);opacity:0;transform:translateY(20px);transition:all .8s ease .5s}
 .loaded .hero-sub{opacity:1;transform:translateY(0)}
 .hero-meta{position:absolute;bottom:2.2rem;left:clamp(1.2rem,5vw,4rem);right:clamp(1.2rem,5vw,4rem);z-index:2;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;font-family:var(--mono);font-size:.72rem;color:var(--muted);letter-spacing:.04em;opacity:0;transition:opacity 1s ease .9s}
 .loaded .hero-meta{opacity:1}
@@ -153,7 +153,7 @@ footer{padding:2rem clamp(1.2rem,5vw,4rem);border-top:1px solid var(--line-solid
       <span class="line"><span>Julian</span></span>
       <span class="line"><span><em>Pacheco</em></span></span>
     </h1>
-    <p class="hero-sub">Biomedical researcher in HIV/SIV immunology, building toward drug discovery at the intersection of computational biology, machine learning, and translational medicine.</p>
+    <p class="hero-sub">Biomedical researcher in vaccine and gene therapy development, pursuing data science and machine learning to accelerate therapeutic discovery and development.</p>
   </div>
   <div class="hero-meta">
     <span>Biomedical Researcher &mdash; OHSU / VGTI</span>
@@ -533,6 +533,21 @@ if (!reduce) {
     entries.forEach(e => { if (e.isIntersecting) setMorphState('free'); });
   }, {threshold: 0.2});
   heroObs.observe(document.querySelector('.hero'));
+}
+
+// ── Hero scroll exit ───────────────────────────────────────────
+if (!reduce) {
+  const heroInner = document.querySelector('.hero-inner');
+  const heroMeta  = document.querySelector('.hero-meta');
+  const heroEl    = document.querySelector('.hero');
+
+  window.addEventListener('scroll', function() {
+    const t = Math.max(0, Math.min(1, window.scrollY / (heroEl.offsetHeight * 0.65)));
+    const opacity = Math.max(0, 1 - t * 1.4);
+    heroInner.style.opacity = opacity;
+    heroInner.style.transform = 'translateY(' + (-t * 80) + 'px)';
+    heroMeta.style.opacity = opacity;
+  }, { passive: true });
 }
 </script>
 </body>
