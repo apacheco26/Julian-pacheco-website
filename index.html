@@ -399,6 +399,7 @@ footer{padding:2rem clamp(1.2rem,5vw,4rem);border-top:1px solid var(--line-solid
 <script>
 history.scrollRestoration = 'manual';
 window.scrollTo(0, 0);
+document.documentElement.style.overflow = 'hidden';
 const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 // ── Boot sequence ──────────────────────────────────────────────
@@ -412,6 +413,8 @@ const intro = document.getElementById('intro');
 function finishIntro() {
   intro.classList.add('done');
   document.body.classList.add('loaded');
+  window.scrollTo(0, 0);
+  document.documentElement.style.overflow = '';
   setTimeout(() => { intro.style.display = 'none'; }, 1000);
 }
 
@@ -438,6 +441,7 @@ if (reduce) {
   loader.style.display = 'none';
   intro.style.display = 'none';
   document.body.classList.add('loaded');
+  document.documentElement.style.overflow = '';
 } else {
   [0, 400, 900].forEach((delay, i) => {
     setTimeout(() => bootLines[i].classList.add('show'), delay);
