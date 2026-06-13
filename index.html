@@ -61,8 +61,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content
 .hero-meta{position:absolute;bottom:2.2rem;left:clamp(1.2rem,5vw,4rem);right:clamp(1.2rem,5vw,4rem);z-index:2;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;font-family:var(--mono);font-size:.72rem;color:var(--muted);letter-spacing:.04em;opacity:0;transition:opacity 1s ease .9s}
 .loaded .hero-meta{opacity:1}
 .scroll-hint{display:flex;align-items:center;gap:.5rem}
-.scroll-hint .dot{width:5px;height:5px;border-radius:50%;background:var(--accent);animation:pulse 1.8s infinite}
-@keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
+.scroll-arrow{width:.9rem;height:.9rem;stroke:var(--accent);fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;animation:bounce 1.8s ease-in-out infinite}
+@keyframes bounce{0%,100%{transform:translateY(-2px)}50%{transform:translateY(3px)}}
 section{padding:clamp(4rem,10vw,9rem) clamp(1.2rem,5vw,4rem);position:relative;z-index:1;background:rgba(10,12,11,0.82)}
 .section-head{display:flex;align-items:baseline;gap:1rem;margin-bottom:3.5rem;border-bottom:1px solid var(--line-solid);padding-bottom:1.2rem}
 .section-num{font-family:var(--mono);font-size:.8rem;color:var(--accent)}
@@ -78,10 +78,12 @@ section{padding:clamp(4rem,10vw,9rem) clamp(1.2rem,5vw,4rem);position:relative;z
 .entry .when{font-family:var(--mono);font-size:.8rem;color:var(--muted)}
 .entry .role{font-family:var(--display);font-size:clamp(1.2rem,2.4vw,1.7rem);font-weight:500;letter-spacing:-.01em}
 .entry .org{color:var(--accent);font-size:.95rem;margin:.3rem 0 .9rem;font-family:var(--mono)}
-.entry .desc{color:var(--muted);max-width:62ch;font-size:1rem}
+.entry .desc{color:var(--muted);max-width:66ch;font-size:1rem}
 .entry .desc ul{list-style:none;margin-top:.7rem}
-.entry .desc li{position:relative;padding-left:1.3rem;margin-bottom:.5rem}
+.entry .desc li{position:relative;padding-left:1.3rem;margin-bottom:.7rem;line-height:1.6}
 .entry .desc li::before{content:"\2192";position:absolute;left:0;color:var(--accent-dim)}
+.entry-tag{font-weight:600;color:var(--ink)}
+.accent-term{color:var(--accent)}
 @media(max-width:640px){.entry{grid-template-columns:1fr;gap:.6rem}}
 .pub{display:flex;gap:1.5rem;padding:1.6rem 0;border-top:1px solid var(--line-solid);align-items:baseline}
 .pub .year{font-family:var(--mono);font-size:.82rem;color:var(--accent);flex-shrink:0;width:3rem}
@@ -109,17 +111,22 @@ section{padding:clamp(4rem,10vw,9rem) clamp(1.2rem,5vw,4rem);position:relative;z
 footer{padding:2rem clamp(1.2rem,5vw,4rem);border-top:1px solid var(--line-solid);display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;font-family:var(--mono);font-size:.72rem;color:var(--muted);position:relative;z-index:1;background:var(--bg)}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.hero h1 .line span{transform:none}.hero-sub,.hero-meta,.reveal{opacity:1;transform:none}.boot-name{opacity:1;transform:none}}
 
-/* ── Intro overlay ──────────────────────────────────────────── */
-#intro{position:fixed;inset:0;z-index:999;background:#0d1117;overflow-y:scroll;scrollbar-width:none;pointer-events:none;transition:transform .9s cubic-bezier(.76,0,.24,1);display:flex;align-items:flex-start}
-#intro::-webkit-scrollbar{display:none}
-#intro.done{transform:translateY(-100%)}
-.intro-sticky{position:sticky;top:0;width:45%;height:100vh;flex-shrink:0;display:flex;align-items:center;justify-content:center;padding:2rem;border-right:1px solid rgba(255,255,255,.06);z-index:2}
-.intro-label{font-family:var(--display);font-size:clamp(1.2rem,2.8vw,2.2rem);font-weight:600;color:var(--accent);text-align:center;letter-spacing:-.01em}
-.intro-right{flex:1;display:flex;flex-direction:column}
-.intro-spacer{height:50vh;flex-shrink:0}
-.intro-list{list-style:none;padding:0 clamp(1.5rem,4vw,3rem);margin:0;display:flex;flex-direction:column;align-items:center}
-.intro-list li{font-family:var(--display);font-size:clamp(2.2rem,6.5vw,5.5rem);font-weight:700;line-height:1.2;padding:.18em 0;background:linear-gradient(180deg,rgba(255,255,255,.1) 0 calc(50vh - 4rem),#ff2020 calc(50vh - 4.1rem) calc(50vh + 4.1rem),rgba(255,255,255,.1) calc(50vh + 4rem));background-attachment:fixed;color:transparent;-webkit-background-clip:text;background-clip:text}
-.intro-bio{background:linear-gradient(180deg,rgba(255,255,255,.1) 0 calc(50vh - 4rem),#00e676 calc(50vh - 4.1rem) calc(50vh + 4.1rem),rgba(255,255,255,.1) calc(50vh + 4rem))!important;background-attachment:fixed!important;-webkit-background-clip:text!important;background-clip:text!important}
+/* ── Intro rotator ──────────────────────────────────────────── */
+#intro{position:fixed;inset:0;z-index:999;background:#0d1117;display:flex;align-items:center;justify-content:center;transition:transform .9s cubic-bezier(.76,0,.24,1);pointer-events:none}
+#intro.phase2{pointer-events:all}
+#intro.done{transform:translateY(-100%);pointer-events:none}
+.intro-rotator{text-align:center;padding:2rem;max-width:90vw}
+.intro-lead-wrap{position:relative;height:1.8em;margin-bottom:1.4rem;display:flex;align-items:center;justify-content:center}
+.intro-lead{position:absolute;font-family:var(--mono);font-size:clamp(.75rem,1.6vw,.9rem);letter-spacing:.18em;color:rgba(255,255,255,.45);text-transform:lowercase;white-space:nowrap;transition:opacity .6s ease}
+#intro-lead-p2{opacity:0}
+.intro-stage{display:grid;place-items:center;min-height:clamp(5rem,15vw,12rem)}
+.intro-gerund,.intro-nav{grid-area:1/1}
+.intro-gerund{font-family:var(--display);font-size:clamp(2.8rem,9vw,7.5rem);font-weight:700;color:var(--muted);transition:opacity .28s ease;white-space:nowrap}
+.intro-nav{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(.3rem,1.2vw,.8rem) clamp(.8rem,2.5vw,2rem);opacity:0;pointer-events:none;transition:opacity .5s ease}
+.intro-nav.visible{opacity:1;pointer-events:all}
+.intro-nav-item{font-family:var(--display);font-size:clamp(1.8rem,5vw,4.5rem);font-weight:700;color:rgba(255,255,255,.2);cursor:pointer;text-decoration:none;transition:color .3s ease;line-height:1.1}
+.intro-nav-item.active{color:var(--accent)}
+.intro-nav-item:hover:not(.active){color:rgba(255,255,255,.6)}
 
 /* ── Hero icon strip ────────────────────────────────────────── */
 .hero-icons{display:flex;align-items:stretch;flex-wrap:wrap;gap:0;margin-top:2.8rem;opacity:0;transform:translateY(20px);transition:opacity .8s ease .7s,transform .8s cubic-bezier(.16,1,.3,1) .7s}
@@ -137,11 +144,6 @@ footer{padding:2rem clamp(1.2rem,5vw,4rem);border-top:1px solid var(--line-solid
 @media(max-width:640px){.hero-icon-item{padding:0 .9rem}.hero-icon-item:nth-child(2){border-right:none}.hero-icon-item:nth-child(n+3){flex-basis:100%;border-right:none;border-top:1px solid var(--line-solid);padding:.8rem 0 0}}
 
 /* ── Section scroll snap ────────────────────────────────────── */
-html{scroll-snap-type:y mandatory}
-.hero,#focus,#experience,#education,#research,#skills,#contact{scroll-snap-align:start}
-/* snap inside the intro overlay */
-#intro{scroll-snap-type:y mandatory}
-.intro-list li{scroll-snap-align:center}
 
 /* ── Scroll-driven animations ───────────────────────────────── */
 @supports(animation-timeline:scroll()){
@@ -194,18 +196,21 @@ html{scroll-snap-type:y mandatory}
   </div>
 </div>
 <div id="intro">
-  <div class="intro-sticky"><span class="intro-label">this is me...</span></div>
-  <div class="intro-right">
-    <div class="intro-spacer"></div>
-    <ul class="intro-list">
-      <li>watching futbol</li>
-      <li>drinking coffee</li>
-      <li>running</li>
-      <li>pipetting</li>
-      <li>playing mahjong</li>
-      <li class="intro-bio">bio</li>
-    </ul>
-    <div class="intro-spacer"></div>
+  <div class="intro-rotator">
+    <div class="intro-lead-wrap">
+      <span class="intro-lead" id="intro-lead-p1">this is me&hellip;</span>
+      <span class="intro-lead" id="intro-lead-p2">here&rsquo;s my&hellip;</span>
+    </div>
+    <div class="intro-stage">
+      <span class="intro-gerund" id="intro-gerund">watching futbol</span>
+      <nav class="intro-nav" id="intro-nav">
+        <a class="intro-nav-item active" data-target="focus">story</a>
+        <a class="intro-nav-item" data-target="experience">experience</a>
+        <a class="intro-nav-item" data-target="research">publications</a>
+        <a class="intro-nav-item" data-target="skills">code</a>
+        <a class="intro-nav-item" data-target="contact">contact</a>
+      </nav>
+    </div>
   </div>
 </div>
 <nav>
@@ -252,7 +257,7 @@ html{scroll-snap-type:y mandatory}
   </div>
   <div class="hero-meta">
     <span>Biomedical Researcher &mdash; Vaccine and Gene Therapy Institute</span>
-    <div class="scroll-hint"><span class="dot"></span>SCROLL</div>
+    <div class="scroll-hint"><svg class="scroll-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>SCROLL</div>
     <span>MS Data Science &mdash; Willamette &rsquo;26</span>
   </div>
 </header>
@@ -264,28 +269,26 @@ html{scroll-snap-type:y mandatory}
 </section>
 <section id="experience">
   <div class="section-head"><span class="section-num">02</span><h2>Experience</h2></div>
-  <div class="entry reveal" data-morph="lab">
+  <div class="entry reveal">
     <div class="when">2021 &mdash; Present</div>
     <div>
       <div class="role">Research Assistant</div>
-      <div class="org">OHSU &middot; Vaccine and Gene Therapy Institute &middot; Beaverton, OR</div>
+      <div class="org">Vaccine and Gene Therapy Institute &middot; OHSU &middot; Beaverton, OR</div>
       <div class="desc"><ul>
-        <li>Generated and analyzed high dimensional flow cytometry datasets across human and non-human primate models, building multiparameter pipelines (gating, titration, downstream quantification) feeding publications, presentations, and grant reporting</li>
-        <li>Produced longitudinal immune response data for a Gilead funded Phase 1b trial (NCT04811040) of lenacapavir with teropavimab and zinlirvimab, an FDA Breakthrough Therapy designated regimen now in Phase 2; quantified CD4+/CD8+ T cell responses across 52 weeks, contributing analysis presented at IAS 2025</li>
-        <li>Performed quantitative immunophenotyping on patient cohort samples (RV254/SEARCH010, Thailand) across acute and chronic infection, characterizing T cell and NK activation, memory, and function</li>
-        <li>Designed longitudinal multi tissue NHP experiments, structuring time series datasets (viral load, cytokine, cell associated RNA/DNA) to model SIV reservoir dynamics under treatment</li>
-        <li>Evaluated therapeutic candidates through dose titration experiments, generating dose response data on latency reversal agents and a novel IL-15 immunotherapy</li>
+        <li><span class="entry-tag">Translational immunology:</span> Contributed immune response analysis to a Phase 1b trial of <span class="accent-term">lenacapavir</span>, an <span class="accent-term">FDA Breakthrough Therapy</span> designated regimen now in Phase 2, joining a collaborative effort to bring this lifesaving treatment closer to market.</li>
+        <li><span class="entry-tag">End to end analysis:</span> Built and ran multiparameter flow cytometry pipelines across human and NHP models, transforming high dimensional data into quantified results that anchored publications, presentations, and grant reporting.</li>
+        <li><span class="entry-tag">Collaborative research:</span> Contributed to a multidisciplinary team designing longitudinal NHP and human studies, building time series data structures (viral load, cytokine, cell associated RNA/DNA) from in vivo and in vitro samples to study how SIV and HIV persist during treatment.</li>
       </ul></div>
     </div>
   </div>
-  <div class="entry reveal" data-morph="desert">
+  <div class="entry reveal">
     <div class="when">2020</div>
     <div>
       <div class="role">Biological Field Technician (Contract)</div>
       <div class="org">Bureau of Land Management &middot; via Oregon State University &middot; Lakeview, OR</div>
       <div class="desc"><ul>
-        <li>Supported the Warner Mountains Greater Sage Grouse and juniper removal study under Wildlife Biologist Kimberly Haab; contributed to findings published in Global Ecology and Conservation (Haab et al., 2024)</li>
-        <li>Executed vegetation and soil sampling across remote public lands; conducted sage grouse monitoring via radio telemetry, nest assessments, and brood counts</li>
+        <li><span class="entry-tag">Data integrity:</span> Built rigorous data collection and integrity practices in the field on a Greater Sage Grouse and juniper removal study, the same foundation of clean, reliable data that drives my work from raw inputs to analysis today.</li>
+        <li><span class="entry-tag">Adaptive sampling:</span> Collected precise field data across a diverse range of instruments and methods, from vegetation and soil sampling to radio telemetry, nest assessments, and brood counts, building the technical versatility I carry across tools and platforms today.</li>
       </ul></div>
     </div>
   </div>
@@ -409,16 +412,55 @@ function finishIntro() {
 }
 
 function startIntroSequence() {
-  const items = [...intro.querySelectorAll('.intro-list li')];
-  const intervals = [260, 270, 310, 520, 840, 1400];
-  let idx = 0;
-  function advance() {
-    if (idx >= items.length) { setTimeout(finishIntro, 350); return; }
-    items[idx].scrollIntoView({ behavior: 'smooth', block: 'center' });
-    setTimeout(advance, intervals[idx]);
-    idx++;
+  const gerunds  = ['watching futbol','drinking coffee','running','pipetting','playing mahjong'];
+  const gerundEl = document.getElementById('intro-gerund');
+  const navEl    = document.getElementById('intro-nav');
+  const leadP1   = document.getElementById('intro-lead-p1');
+  const leadP2   = document.getElementById('intro-lead-p2');
+  const navItems = navEl.querySelectorAll('.intro-nav-item');
+  const FADE = 280;
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+  // hold times (ms visible per item) — pass 1 slow, pass 3 faster
+  const holds = [
+    [2100, 1900, 1700, 1500, 1400],
+    [1300, 1300, 1300, 1300, 1300],
+    [1100, 1100, 1100, 1100, 1100],
+  ];
+  async function run() {
+    gerundEl.textContent = gerunds[0];
+    gerundEl.style.opacity = '1';
+    for (let p = 0; p < 3; p++) {
+      for (let i = 0; i < gerunds.length; i++) {
+        if (p === 0 && i === 0) { await sleep(holds[0][0]); continue; }
+        gerundEl.style.opacity = '0';
+        await sleep(FADE);
+        gerundEl.textContent = gerunds[i];
+        gerundEl.style.opacity = '1';
+        await sleep(FADE + holds[p][i]);
+      }
+    }
+    // ── Phase 2 transition ──
+    gerundEl.style.opacity = '0';
+    await sleep(FADE);
+    leadP1.style.opacity = '0';
+    leadP2.style.opacity = '1';
+    navEl.classList.add('visible');
+    intro.classList.add('phase2');
+    navItems.forEach(item => {
+      item.addEventListener('click', e => {
+        e.preventDefault();
+        navItems.forEach(n => n.classList.remove('active'));
+        item.classList.add('active');
+        const target = item.dataset.target;
+        finishIntro();
+        setTimeout(() => {
+          const el = document.getElementById(target);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 650);
+      });
+    });
   }
-  setTimeout(advance, 380);
+  run();
 }
 
 function revealPage() {
