@@ -121,12 +121,53 @@ footer{padding:2rem clamp(1.2rem,5vw,4rem);border-top:1px solid var(--line-solid
 .intro-label{font-family:var(--mono);font-size:clamp(.65rem,1.4vw,.8rem);letter-spacing:.18em;color:rgba(88,166,255,.55);text-transform:lowercase}
 .intro-spacer{height:50vh}
 .intro-list{list-style:none;padding:0 clamp(1.2rem,5vw,4rem);margin:0}
-.intro-list li{font-family:var(--display);font-size:clamp(2.2rem,6.5vw,5.5rem);font-weight:700;line-height:1.2;padding:.18em 0;background:linear-gradient(180deg,rgba(255,255,255,.1) 0 calc(50vh - 1.3rem),hsl(280,88%,74%) calc(50vh - 1.4rem) calc(50vh + 1.4rem),rgba(255,255,255,.1) calc(50vh + 1.3rem));background-attachment:fixed;color:transparent;-webkit-background-clip:text;background-clip:text}
-.intro-bio{background:linear-gradient(180deg,rgba(255,255,255,.1) 0 calc(50vh - 1.3rem),var(--accent) calc(50vh - 1.4rem) calc(50vh + 1.4rem),rgba(255,255,255,.1) calc(50vh + 1.3rem))!important;background-attachment:fixed!important;-webkit-background-clip:text!important;background-clip:text!important}
+.intro-list li{font-family:var(--display);font-size:clamp(2.2rem,6.5vw,5.5rem);font-weight:700;line-height:1.2;padding:.18em 0;background:linear-gradient(180deg,rgba(255,255,255,.1) 0 calc(50vh - 4rem),#ff2020 calc(50vh - 4.1rem) calc(50vh + 4.1rem),rgba(255,255,255,.1) calc(50vh + 4rem));background-attachment:fixed;color:transparent;-webkit-background-clip:text;background-clip:text}
+.intro-bio{background:linear-gradient(180deg,rgba(255,255,255,.1) 0 calc(50vh - 4rem),#00e676 calc(50vh - 4.1rem) calc(50vh + 4.1rem),rgba(255,255,255,.1) calc(50vh + 4rem))!important;background-attachment:fixed!important;-webkit-background-clip:text!important;background-clip:text!important}
+
+/* ── Hero icon strip ────────────────────────────────────────── */
+.hero-icons{display:flex;align-items:stretch;flex-wrap:wrap;gap:0;margin-top:2.8rem;opacity:0;transform:translateY(20px);transition:opacity .8s ease .7s,transform .8s cubic-bezier(.16,1,.3,1) .7s}
+.loaded .hero-icons{opacity:1;transform:translateY(0)}
+.hero-icon-item{display:flex;align-items:center;gap:.65rem;padding:0 1.5rem;border-right:1px solid var(--line-solid)}
+.hero-icon-item:first-child{padding-left:0}
+.hero-icon-item:last-child{border-right:none;padding-right:0}
+.hero-icon-item svg{width:1.4rem;height:1.4rem;stroke:var(--accent);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.hero-icon-label{font-family:var(--mono);font-size:.58rem;letter-spacing:.07em;color:var(--muted);text-transform:uppercase;line-height:1.5}
+.hero-badge-wrap{margin-top:1.8rem;opacity:0;transform:translateY(16px);transition:opacity .8s ease .85s,transform .8s cubic-bezier(.16,1,.3,1) .85s}
+.loaded .hero-badge-wrap{opacity:1;transform:translateY(0)}
+.hero-badge{display:inline-flex;align-items:center;gap:.6rem;border:1px solid var(--line-solid);border-radius:4px;padding:.5rem 1.1rem;font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;color:var(--ink);text-transform:uppercase;transition:border-color .25s,color .25s}
+.hero-badge:hover{border-color:var(--accent);color:var(--accent)}
+.hero-badge svg{width:.9rem;height:.9rem;stroke:var(--accent);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:640px){.hero-icon-item{padding:0 .9rem}.hero-icon-item:nth-child(2){border-right:none}.hero-icon-item:nth-child(n+3){flex-basis:100%;border-right:none;border-top:1px solid var(--line-solid);padding:.8rem 0 0}}
 
 /* ── Section scroll snap ────────────────────────────────────── */
 html{scroll-snap-type:y mandatory}
 .hero,#focus,#experience,#education,#research,#skills,#contact{scroll-snap-align:start}
+/* snap inside the intro overlay */
+#intro{scroll-snap-type:y mandatory}
+.intro-list li{scroll-snap-align:center}
+
+/* ── Scroll-driven animations ───────────────────────────────── */
+@supports(animation-timeline:scroll()){
+@media(prefers-reduced-motion:no-preference){
+  /* Hero content fades + lifts out as you scroll away from it */
+  .hero{view-timeline:--hero-vt}
+  .hero-inner,.hero-meta{
+    animation:hero-exit both linear;
+    animation-timeline:--hero-vt;
+    animation-range:exit 0% exit 50%
+  }
+  @keyframes hero-exit{to{opacity:0;translate:0 -1.5rem;scale:.97}}
+
+  /* Each section clips up from the bottom edge as it enters */
+  section{
+    view-timeline:--sec-vt;
+    clip-path:inset(7% 0 0 0);
+    animation:sec-enter both linear;
+    animation-timeline:--sec-vt;
+    animation-range:entry 0% entry 30%
+  }
+  @keyframes sec-enter{to{clip-path:inset(0% 0 0 0)}}
+}}
 </style>
 </head>
 <body>
@@ -181,6 +222,30 @@ html{scroll-snap-type:y mandatory}
       <span class="line"><span><em>Pacheco</em></span></span>
     </h1>
     <p class="hero-sub">Biomedical researcher in vaccine and gene therapy development, pursuing data science and machine learning to accelerate therapeutic discovery and development.</p>
+    <div class="hero-icons">
+      <div class="hero-icon-item">
+        <svg viewBox="0 0 24 24"><path d="M2 3c0 0 5 1.5 8 3.5C13 8.5 14 9 14 10c0 1-1 1.5-3.5 2S4 14 4 16c0 2 2 3 5.5 4.5S15 23 15 23"/><path d="M22 3c0 0-5 1.5-8 3.5C11 8.5 10 9 10 10c0 1 1 1.5 3.5 2S20 14 20 16c0 2-2 3-5.5 4.5S9 23 9 23"/></svg>
+        <span class="hero-icon-label">Gene Therapy<br>Innovation</span>
+      </div>
+      <div class="hero-icon-item">
+        <svg viewBox="0 0 24 24"><rect x="3" y="12" width="4" height="9"/><rect x="10" y="7" width="4" height="14"/><rect x="17" y="3" width="4" height="18"/><line x1="1" y1="21" x2="23" y2="21"/></svg>
+        <span class="hero-icon-label">Data Science<br>&amp; Analytics</span>
+      </div>
+      <div class="hero-icon-item">
+        <svg viewBox="0 0 24 24"><path d="M9.5 2A2.5 2.5 0 0 0 7 4.5c0 .9.5 1.7 1.2 2.2A3.5 3.5 0 0 0 5 10a3.5 3.5 0 0 0 2.3 3.3V16h9v-2.7A3.5 3.5 0 0 0 19 10a3.5 3.5 0 0 0-3.2-3.5A2.5 2.5 0 0 0 14.5 2h-5z"/><line x1="12" y1="2" x2="12" y2="16"/><path d="M9 6.5c.7.8.7 2 0 3"/><path d="M15 6.5c-.7.8-.7 2 0 3"/></svg>
+        <span class="hero-icon-label">Machine Learning<br>&amp; AI</span>
+      </div>
+      <div class="hero-icon-item">
+        <svg viewBox="0 0 24 24"><path d="M12 22s9-4.5 9-10.5V5l-9-3-9 3v6.5C3 17.5 12 22 12 22z"/><line x1="12" y1="9" x2="12" y2="16"/><line x1="8.5" y1="12.5" x2="15.5" y2="12.5"/></svg>
+        <span class="hero-icon-label">Advancing<br>Human Health</span>
+      </div>
+    </div>
+    <div class="hero-badge-wrap">
+      <span class="hero-badge">
+        <svg viewBox="0 0 24 24"><polygon points="12 2 22 8.5 12 15 2 8.5"/><path d="M6 12v5c0 2 2.7 3.5 6 3.5s6-1.5 6-3.5v-5"/><line x1="22" y1="8.5" x2="22" y2="15"/></svg>
+        M.S. in Data Science
+      </span>
+    </div>
   </div>
   <div class="hero-meta">
     <span>Biomedical Researcher &mdash; Vaccine and Gene Therapy Institute</span>
@@ -348,12 +413,12 @@ function finishIntro() {
 
 function startIntroSequence() {
   const items = [...intro.querySelectorAll('.intro-list li')];
-  const holds = [420, 420, 420, 420, 420, 850];
+  const intervals = [260, 270, 310, 520, 840, 1400];
   let idx = 0;
   function advance() {
     if (idx >= items.length) { setTimeout(finishIntro, 350); return; }
     items[idx].scrollIntoView({ behavior: 'smooth', block: 'center' });
-    setTimeout(advance, holds[idx] + 580);
+    setTimeout(advance, intervals[idx]);
     idx++;
   }
   setTimeout(advance, 380);
