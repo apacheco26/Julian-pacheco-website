@@ -143,12 +143,15 @@
     .tab-btn:hover { color: var(--ink); }
     .tab-btn.active { color: var(--ink); border-bottom-color: var(--ink); font-weight: 500; }
 
+    /* ── Tab nav hidden — single scroll layout ── */
+    .tab-nav { display: none; }
+
     /* ── Section shell ── */
     .section {
-      display: none;
+      display: block;
       padding: 2.5rem clamp(1rem,5vw,4rem) 4rem;
+      border-top: 2px solid var(--ink);
     }
-    .section.active { display: block; }
     .section-inner { max-width: 1400px; margin: 0 auto; }
     .section-title {
       font-family: 'Bebas Neue', sans-serif;
@@ -893,14 +896,14 @@
 <div class="tt" id="tt" role="tooltip" aria-hidden="true"></div>
 
 <!-- ══════════════════════════════════════════════════════ -->
-<main>
+<main style="overflow-x:hidden">
 
   <!-- THE FORMAT -->
   <section id="tab-format" class="section active" role="tabpanel">
     <div class="section-inner">
       <h2 class="section-title">The Format</h2>
       <p class="section-desc">
-        The first-ever 48-team World Cup. Twelve groups of four. The top two from each group, plus the eight best third-place finishers, advance to a knockout Round of 32 — producing a longer, broader tournament across three host nations.
+        The first-ever 48-team World Cup. Twelve groups of four. The top two from each group, plus the eight best third-place finishers, advance to a knockout Round of 32, producing a longer, broader tournament across three host nations.
       </p>
 
       <div class="format-stats">
@@ -963,9 +966,7 @@
         <div class="bracket-row final-row">
           <div class="bracket-dot"></div>
           <div>
-            <div class="bracket-round-name">
-              Final <span class="bracket-trophy">🏆</span>
-            </div>
+            <div class="bracket-round-name">Final</div>
             <div class="bracket-sub">New York · MetLife Stadium</div>
           </div>
           <div class="bracket-meta" style="color:var(--ink);font-weight:500">Jul 19</div>
@@ -977,7 +978,7 @@
         <!-- Third-place qualification -->
         <div class="fmt-block">
           <div class="fmt-block-head">How Third Place Works</div>
-          <p class="fmt-block-lead">Eight of the 12 third-place finishers advance to the Round of 32 — ranked across all groups by:</p>
+          <p class="fmt-block-lead">Eight of the 12 third place finishers advance to the Round of 32, ranked across all groups by:</p>
           <ol class="tiebreak-list">
             <li>Points</li>
             <li>Goal difference</li>
@@ -992,8 +993,8 @@
         <div class="fmt-block">
           <div class="fmt-block-head">New Rules for 2026</div>
           <div class="rule-item">
-            <div class="rule-title">Anti-Time-Wasting</div>
-            <div class="rule-desc">Referees visibly count down goal kicks and throw-ins. Exceed the limit and possession is awarded to the opponent.</div>
+            <div class="rule-title">Anti Time Wasting</div>
+            <div class="rule-desc">Referees visibly count down goal kicks and throw ins. Exceed the limit and possession is awarded to the opponent.</div>
           </div>
           <div class="rule-item">
             <div class="rule-title">Prompt Substitutions</div>
@@ -1013,6 +1014,17 @@
     </div>
   </section>
 
+  <!-- THE GROUPS -->
+  <section id="tab-groups" class="section" role="tabpanel">
+    <div class="section-inner">
+      <h2 class="section-title">The Groups</h2>
+      <p class="section-desc">
+        48 nations drawn into 12 groups of four. Hover any tile to see the full lineup. ★ marks host nations.
+      </p>
+      <div class="groups-grid" id="groups-grid"></div>
+    </div>
+  </section>
+
   <!-- THE CITIES -->
   <section id="tab-cities" class="section" role="tabpanel">
     <div class="section-inner">
@@ -1025,26 +1037,15 @@
         <div class="legend-item"><div class="legend-dot" style="background:#B5614A"></div>USA (11 venues)</div>
         <div class="legend-item"><div class="legend-dot" style="background:#4E8A68"></div>Mexico (3 venues)</div>
         <div class="legend-item"><div class="legend-dot" style="background:#3E6E9A"></div>Canada (2 venues)</div>
-        <div class="legend-item"><div class="legend-dot" style="background:#1A1916;border:2px solid white;outline:1px solid #1A1916"></div>Final — MetLife</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#1A1916;border:2px solid white;outline:1px solid #1A1916"></div>Final, MetLife</div>
       </div>
-    </div>
-  </section>
-
-  <!-- THE GROUPS -->
-  <section id="tab-groups" class="section" role="tabpanel">
-    <div class="section-inner">
-      <h2 class="section-title">The Groups</h2>
-      <p class="section-desc">
-        48 nations drawn into 12 groups of four. Hover any tile to see the full lineup. ★ marks host nations.
-        <br><em style="font-size:0.75rem;color:var(--muted)">Group assignments are provisional — update the <code>GROUPS</code> object in the data layer with the official draw.</em>
-      </p>
-      <div class="groups-grid" id="groups-grid"></div>
     </div>
   </section>
 
   <!-- THE SCHEDULE -->
   <section id="tab-schedule" class="section" role="tabpanel">
     <div class="section-inner">
+      <h2 class="section-title" style="margin-bottom:1.5rem">The Schedule</h2>
       <div class="day-nav-wrap">
         <div class="day-nav-date" id="sched-day-label"></div>
         <div class="day-nav-controls">
@@ -1301,25 +1302,16 @@ function moveTT(e) {
 document.addEventListener('mousemove', e => { if (ttVisible) moveTT(e); });
 
 // ══════════════════════════════════════════════════════════════
-// TAB NAVIGATION
+// MAP — lazy-init when cities section enters viewport
 // ══════════════════════════════════════════════════════════════
 
 let mapReady = false;
-
-document.querySelectorAll('.tab-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.tab-btn').forEach(b => {
-      b.classList.remove('active');
-      b.setAttribute('aria-selected', 'false');
-    });
-    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-    btn.classList.add('active');
-    btn.setAttribute('aria-selected', 'true');
-    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
-    if (btn.dataset.tab === 'cities'   && !mapReady) { initMap(); mapReady = true; }
-    if (btn.dataset.tab === 'schedule') renderSchedule();
+const mapObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting && !mapReady) { initMap(); mapReady = true; mapObserver.disconnect(); }
   });
-});
+}, { threshold: 0.1 });
+mapObserver.observe(document.getElementById('tab-cities'));
 
 // ══════════════════════════════════════════════════════════════
 // GROUPS GRID
