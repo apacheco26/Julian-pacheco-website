@@ -58,7 +58,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content
 .hero h1 em{font-style:normal;color:var(--accent)}
 .hero-sub{margin-top:2.8rem;max-width:52ch;font-size:clamp(1rem,1.6vw,1.25rem);color:var(--muted);opacity:0;transform:translateY(20px);transition:all .8s ease .5s}
 .loaded .hero-sub{opacity:1;transform:translateY(0)}
-.hero-meta{position:absolute;bottom:2.2rem;left:clamp(1.2rem,5vw,4rem);right:clamp(1.2rem,5vw,4rem);z-index:2;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;font-family:var(--mono);font-size:.72rem;color:var(--muted);letter-spacing:.04em;opacity:0;transition:opacity 1s ease .9s}
+.hero-meta{position:absolute;bottom:2.2rem;left:clamp(1.2rem,5vw,4rem);right:clamp(1.2rem,5vw,4rem);z-index:2;display:flex;justify-content:center;flex-wrap:wrap;gap:1rem;font-family:var(--mono);font-size:.72rem;color:var(--muted);letter-spacing:.04em;opacity:0;transition:opacity 1s ease .9s}
 .loaded .hero-meta{opacity:1}
 .scroll-hint{display:flex;align-items:center;gap:.5rem}
 .scroll-arrow{width:.9rem;height:.9rem;stroke:var(--accent);fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;animation:bounce 1.8s ease-in-out infinite}
@@ -111,22 +111,16 @@ section{padding:clamp(4rem,10vw,9rem) clamp(1.2rem,5vw,4rem);position:relative;z
 footer{padding:2rem clamp(1.2rem,5vw,4rem);border-top:1px solid var(--line-solid);display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;font-family:var(--mono);font-size:.72rem;color:var(--muted);position:relative;z-index:1;background:var(--bg)}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.hero h1 .line span{transform:none}.hero-sub,.hero-meta,.reveal{opacity:1;transform:none}.boot-name{opacity:1;transform:none}}
 
-/* ── Intro rotator ──────────────────────────────────────────── */
-#intro{position:fixed;inset:0;z-index:999;background:#0d1117;display:flex;align-items:stretch;transition:transform .9s cubic-bezier(.76,0,.24,1);pointer-events:none}
-#intro.phase2{pointer-events:all}
-#intro.done{transform:translateY(-100%);pointer-events:none}
-.intro-left{width:42%;flex-shrink:0;display:flex;align-items:center;justify-content:center;padding:3rem;border-right:1px solid rgba(255,255,255,.06)}
-.intro-lead-wrap{display:grid;justify-items:center}
-.intro-lead{grid-area:1/1;font-family:var(--mono);font-size:clamp(.8rem,1.7vw,.95rem);letter-spacing:.18em;color:rgba(255,255,255,.5);text-transform:lowercase;white-space:nowrap;transition:opacity .6s ease}
-#intro-lead-p2{opacity:0}
-.intro-right-panel{flex:1;display:flex;align-items:center;padding:3rem clamp(2rem,5vw,4rem)}
-.intro-stage{display:flex;align-items:center}
-.intro-gerund{font-family:var(--display);font-size:clamp(2.5rem,6vw,5.5rem);font-weight:700;color:#ff2020;transition:opacity .28s ease;white-space:nowrap}
-.intro-nav{display:none;flex-direction:column;align-items:flex-start;gap:clamp(.15rem,.6vw,.4rem);opacity:0;transition:opacity .5s ease}
-.intro-nav.visible{opacity:1;pointer-events:all}
-.intro-nav-item{font-family:var(--display);font-size:clamp(1.8rem,4.5vw,4rem);font-weight:700;color:rgba(255,255,255,.2);cursor:pointer;text-decoration:none;transition:color .3s ease;line-height:1.15}
-.intro-nav-item.active{color:var(--accent)}
-.intro-nav-item:hover:not(.active){color:rgba(255,255,255,.55)}
+/* ── Intro scroll ───────────────────────────────────────────── */
+#intro{position:fixed;inset:0;z-index:999;background:#0d1117;overflow-y:scroll;scrollbar-width:none;pointer-events:none;transition:transform .9s cubic-bezier(.76,0,.24,1);scroll-snap-type:y mandatory}
+#intro::-webkit-scrollbar{display:none}
+#intro.done{transform:translateY(-100%)}
+.intro-sticky{position:sticky;top:0;padding:1.4rem clamp(1.2rem,5vw,4rem);z-index:2;pointer-events:none}
+.intro-label{font-family:var(--mono);font-size:clamp(.65rem,1.4vw,.8rem);letter-spacing:.18em;color:rgba(88,166,255,.55);text-transform:lowercase}
+.intro-spacer{height:50vh}
+.intro-list{list-style:none;padding:0 clamp(1.2rem,5vw,4rem);margin:0}
+.intro-list li{font-family:var(--display);font-size:clamp(2.2rem,6.5vw,5.5rem);font-weight:700;line-height:1.2;padding:.18em 0;background:linear-gradient(180deg,rgba(255,255,255,.1) 0 calc(50vh - 4rem),#ff2020 calc(50vh - 4.1rem) calc(50vh + 4.1rem),rgba(255,255,255,.1) calc(50vh + 4rem));background-attachment:fixed;color:transparent;-webkit-background-clip:text;background-clip:text;scroll-snap-align:center}
+.intro-bio{background:linear-gradient(180deg,rgba(255,255,255,.1) 0 calc(50vh - 4rem),#00e676 calc(50vh - 4.1rem) calc(50vh + 4.1rem),rgba(255,255,255,.1) calc(50vh + 4rem))!important;background-attachment:fixed!important;-webkit-background-clip:text!important;background-clip:text!important}
 
 /* ── Hero icon strip ────────────────────────────────────────── */
 .hero-icons{display:flex;align-items:stretch;flex-wrap:wrap;gap:0;margin-top:2.8rem;opacity:0;transform:translateY(20px);transition:opacity .8s ease .7s,transform .8s cubic-bezier(.16,1,.3,1) .7s}
@@ -196,24 +190,17 @@ footer{padding:2rem clamp(1.2rem,5vw,4rem);border-top:1px solid var(--line-solid
   </div>
 </div>
 <div id="intro">
-  <div class="intro-left">
-    <div class="intro-lead-wrap">
-      <span class="intro-lead" id="intro-lead-p1">this is me&hellip;</span>
-      <span class="intro-lead" id="intro-lead-p2">here&rsquo;s my&hellip;</span>
-    </div>
-  </div>
-  <div class="intro-right-panel">
-    <div class="intro-stage">
-      <span class="intro-gerund" id="intro-gerund">watching futbol</span>
-      <nav class="intro-nav" id="intro-nav">
-        <a class="intro-nav-item active" data-target="focus">story</a>
-        <a class="intro-nav-item" data-target="experience">experience</a>
-        <a class="intro-nav-item" data-target="research">publications</a>
-        <a class="intro-nav-item" data-target="skills">code</a>
-        <a class="intro-nav-item" data-target="contact">contact</a>
-      </nav>
-    </div>
-  </div>
+  <div class="intro-sticky"><span class="intro-label">this is me...</span></div>
+  <div class="intro-spacer"></div>
+  <ul class="intro-list">
+    <li>watching futbol</li>
+    <li>drinking coffee</li>
+    <li>running</li>
+    <li>pipetting</li>
+    <li>playing mahjong</li>
+    <li class="intro-bio">bio</li>
+  </ul>
+  <div class="intro-spacer"></div>
 </div>
 <nav>
   <a href="#top" class="brand">JP&#8260;</a>
@@ -412,67 +399,16 @@ function finishIntro() {
 }
 
 function startIntroSequence() {
-  const gerunds  = ['watching futbol','drinking coffee','running','pipetting','playing mahjong'];
-  const gerundEl = document.getElementById('intro-gerund');
-  const navEl    = document.getElementById('intro-nav');
-  const leadP1   = document.getElementById('intro-lead-p1');
-  const leadP2   = document.getElementById('intro-lead-p2');
-  const FADE = 280;
-  const holds = [
-    [2100, 1900, 1700, 1500, 1400],
-    [1300, 1300, 1300, 1300, 1300],
-    [1100, 1100, 1100, 1100, 1100],
-  ];
-  let pass = 0, idx = 0, first = true;
-
-  function toPhase2() {
-    gerundEl.style.opacity = '0';
-    setTimeout(() => {
-      gerundEl.style.display = 'none';
-      leadP1.style.opacity = '0';
-      leadP2.style.opacity = '1';
-      navEl.style.display = 'flex';
-      navEl.offsetHeight; // force reflow so transition fires
-      navEl.classList.add('visible');
-      intro.classList.add('phase2');
-      navEl.querySelectorAll('.intro-nav-item').forEach(item => {
-        item.addEventListener('click', e => {
-          e.preventDefault();
-          navEl.querySelectorAll('.intro-nav-item').forEach(n => n.classList.remove('active'));
-          item.classList.add('active');
-          const target = item.dataset.target;
-          finishIntro();
-          setTimeout(() => {
-            const el = document.getElementById(target);
-            if (el) el.scrollIntoView({ behavior: 'smooth' });
-          }, 650);
-        });
-      });
-    }, FADE);
-  }
-
-  function rotate() {
-    if (pass >= 3) { toPhase2(); return; }
-    const text = gerunds[idx];
-    const hold = holds[pass][idx];
+  const items = [...intro.querySelectorAll('.intro-list li')];
+  const intervals = [260, 270, 310, 520, 840, 1400];
+  let idx = 0;
+  function advance() {
+    if (idx >= items.length) { setTimeout(finishIntro, 350); return; }
+    items[idx].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setTimeout(advance, intervals[idx]);
     idx++;
-    if (idx >= gerunds.length) { idx = 0; pass++; }
-    if (first) {
-      first = false;
-      gerundEl.textContent = text;
-      gerundEl.style.opacity = '1';
-      setTimeout(rotate, hold);
-      return;
-    }
-    gerundEl.style.opacity = '0';
-    setTimeout(() => {
-      gerundEl.textContent = text;
-      gerundEl.style.opacity = '1';
-      setTimeout(rotate, FADE + hold);
-    }, FADE);
   }
-
-  setTimeout(rotate, 350);
+  setTimeout(advance, 380);
 }
 
 function revealPage() {
