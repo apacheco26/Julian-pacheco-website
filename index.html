@@ -117,7 +117,7 @@ footer{padding:2rem clamp(1.2rem,5vw,4rem);border-top:1px solid var(--line-solid
 #intro{position:fixed;inset:0;z-index:999;background:#0d1117;overflow-y:scroll;scrollbar-width:none;pointer-events:none;transition:transform .9s cubic-bezier(.76,0,.24,1);scroll-snap-type:y mandatory}
 #intro::-webkit-scrollbar{display:none}
 #intro.done{transform:translateY(-100%)}
-.intro-inner{display:flex;gap:clamp(2rem,6vw,5rem);max-width:min(820px,90vw);margin:0 auto;padding:0 clamp(1.2rem,5vw,4rem);align-items:flex-start}
+.intro-inner{display:flex;gap:clamp(2rem,6vw,5rem);max-width:min(820px,90vw);margin:0 auto 0 8vw;padding:0 clamp(1.2rem,5vw,4rem);align-items:flex-start}
 .intro-left{flex-shrink:0;position:sticky;top:calc(50vh - 1em);height:fit-content}
 .intro-right{flex:1}
 .intro-label{font-family:var(--display);font-size:clamp(2.2rem,6.5vw,5.5rem);font-weight:700;letter-spacing:-.01em;color:rgba(88,166,255,.55);text-transform:lowercase}
@@ -576,7 +576,7 @@ function size() {
 
 function seed() {
   points = [];
-  const c = Math.min(100, Math.floor(W * H / 22000));
+  const c = Math.min(220, Math.floor(W * H / 10000));
   for (let i = 0; i < c; i++) {
     const cl = Math.random();
     let cx, cy;
