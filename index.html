@@ -119,10 +119,9 @@ footer{padding:2rem clamp(1.2rem,5vw,4rem);border-top:1px solid var(--line-solid
 .intro-lead-wrap{position:relative;height:1.8em;margin-bottom:1.4rem;display:flex;align-items:center;justify-content:center}
 .intro-lead{position:absolute;font-family:var(--mono);font-size:clamp(.75rem,1.6vw,.9rem);letter-spacing:.18em;color:rgba(255,255,255,.45);text-transform:lowercase;white-space:nowrap;transition:opacity .6s ease}
 #intro-lead-p2{opacity:0}
-.intro-stage{display:grid;place-items:center;min-height:clamp(5rem,15vw,12rem)}
-.intro-gerund,.intro-nav{grid-area:1/1}
+.intro-stage{display:flex;align-items:center;justify-content:center;min-height:clamp(5rem,15vw,12rem)}
 .intro-gerund{font-family:var(--display);font-size:clamp(2.8rem,9vw,7.5rem);font-weight:700;color:var(--muted);transition:opacity .28s ease;white-space:nowrap}
-.intro-nav{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(.3rem,1.2vw,.8rem) clamp(.8rem,2.5vw,2rem);opacity:0;pointer-events:none;transition:opacity .5s ease}
+.intro-nav{display:none;flex-wrap:wrap;justify-content:center;gap:clamp(.3rem,1.2vw,.8rem) clamp(.8rem,2.5vw,2rem);opacity:0;transition:opacity .5s ease}
 .intro-nav.visible{opacity:1;pointer-events:all}
 .intro-nav-item{font-family:var(--display);font-size:clamp(1.8rem,5vw,4.5rem);font-weight:700;color:rgba(255,255,255,.2);cursor:pointer;text-decoration:none;transition:color .3s ease;line-height:1.1}
 .intro-nav-item.active{color:var(--accent)}
@@ -256,9 +255,7 @@ footer{padding:2rem clamp(1.2rem,5vw,4rem);border-top:1px solid var(--line-solid
     </div>
   </div>
   <div class="hero-meta">
-    <span>Biomedical Researcher &mdash; Vaccine and Gene Therapy Institute</span>
     <div class="scroll-hint"><svg class="scroll-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>SCROLL</div>
-    <span>MS Data Science &mdash; Willamette &rsquo;26</span>
   </div>
 </header>
 <section id="focus">
@@ -417,50 +414,62 @@ function startIntroSequence() {
   const navEl    = document.getElementById('intro-nav');
   const leadP1   = document.getElementById('intro-lead-p1');
   const leadP2   = document.getElementById('intro-lead-p2');
-  const navItems = navEl.querySelectorAll('.intro-nav-item');
   const FADE = 280;
-  const sleep = ms => new Promise(r => setTimeout(r, ms));
-  // hold times (ms visible per item) — pass 1 slow, pass 3 faster
   const holds = [
     [2100, 1900, 1700, 1500, 1400],
     [1300, 1300, 1300, 1300, 1300],
     [1100, 1100, 1100, 1100, 1100],
   ];
-  async function run() {
-    gerundEl.textContent = gerunds[0];
-    gerundEl.style.opacity = '1';
-    for (let p = 0; p < 3; p++) {
-      for (let i = 0; i < gerunds.length; i++) {
-        if (p === 0 && i === 0) { await sleep(holds[0][0]); continue; }
-        gerundEl.style.opacity = '0';
-        await sleep(FADE);
-        gerundEl.textContent = gerunds[i];
-        gerundEl.style.opacity = '1';
-        await sleep(FADE + holds[p][i]);
-      }
-    }
-    // ── Phase 2 transition ──
+  let pass = 0, idx = 0, first = true;
+
+  function toPhase2() {
     gerundEl.style.opacity = '0';
-    await sleep(FADE);
-    leadP1.style.opacity = '0';
-    leadP2.style.opacity = '1';
-    navEl.classList.add('visible');
-    intro.classList.add('phase2');
-    navItems.forEach(item => {
-      item.addEventListener('click', e => {
-        e.preventDefault();
-        navItems.forEach(n => n.classList.remove('active'));
-        item.classList.add('active');
-        const target = item.dataset.target;
-        finishIntro();
-        setTimeout(() => {
-          const el = document.getElementById(target);
-          if (el) el.scrollIntoView({ behavior: 'smooth' });
-        }, 650);
+    setTimeout(() => {
+      gerundEl.style.display = 'none';
+      leadP1.style.opacity = '0';
+      leadP2.style.opacity = '1';
+      navEl.style.display = 'flex';
+      navEl.offsetHeight; // force reflow so transition fires
+      navEl.classList.add('visible');
+      intro.classList.add('phase2');
+      navEl.querySelectorAll('.intro-nav-item').forEach(item => {
+        item.addEventListener('click', e => {
+          e.preventDefault();
+          navEl.querySelectorAll('.intro-nav-item').forEach(n => n.classList.remove('active'));
+          item.classList.add('active');
+          const target = item.dataset.target;
+          finishIntro();
+          setTimeout(() => {
+            const el = document.getElementById(target);
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+          }, 650);
+        });
       });
-    });
+    }, FADE);
   }
-  run();
+
+  function rotate() {
+    if (pass >= 3) { toPhase2(); return; }
+    const text = gerunds[idx];
+    const hold = holds[pass][idx];
+    idx++;
+    if (idx >= gerunds.length) { idx = 0; pass++; }
+    if (first) {
+      first = false;
+      gerundEl.textContent = text;
+      gerundEl.style.opacity = '1';
+      setTimeout(rotate, hold);
+      return;
+    }
+    gerundEl.style.opacity = '0';
+    setTimeout(() => {
+      gerundEl.textContent = text;
+      gerundEl.style.opacity = '1';
+      setTimeout(rotate, FADE + hold);
+    }, FADE);
+  }
+
+  setTimeout(rotate, 350);
 }
 
 function revealPage() {
