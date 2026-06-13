@@ -916,13 +916,14 @@
       overflow-x: auto;
     }
     .rank-chart {
-      min-width: 540px;
+      width: 100%;
+      max-width: 720px;
     }
     .rank-axis {
       display: grid;
-      grid-template-columns: 9.5rem 1fr 3.4rem;
+      grid-template-columns: 7rem 1fr 3rem;
       align-items: end;
-      gap: 0.6rem;
+      gap: 0.5rem;
       padding-bottom: 0.4rem;
       border-bottom: 1px solid var(--line-mid);
       margin-bottom: 0.5rem;
@@ -950,17 +951,17 @@
     .rankings-list {}
     .rankings-row {
       display: grid;
-      grid-template-columns: 9.5rem 1fr 3.4rem;
+      grid-template-columns: 7rem 1fr 3rem;
       align-items: center;
-      gap: 0.6rem;
+      gap: 0.5rem;
       padding: 0.22rem 0;
       position: relative;
     }
     .rankings-row:nth-child(even) { background: rgba(26,25,22,0.025); }
     .r-name {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 0.92rem;
-      letter-spacing: 0.03em;
+      font-size: 0.85rem;
+      letter-spacing: 0.02em;
       color: var(--ink);
       white-space: nowrap;
       overflow: hidden;
@@ -1036,9 +1037,9 @@
     .winners-scroll { overflow-x: auto; }
     .winners-table {
       width: 100%;
-      min-width: 620px;
+      min-width: 480px;
       border-collapse: collapse;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
     }
     .winners-table th {
       text-align: left;
@@ -1090,24 +1091,21 @@
     .titles-grid { display: flex; flex-direction: column; gap: 0.4rem; }
     .titles-row {
       display: grid;
-      grid-template-columns: 1.6rem 1fr auto;
+      grid-template-columns: 6rem 1.6rem 1fr auto;
       align-items: center;
-      gap: 0.7rem;
+      gap: 0.6rem;
     }
-    .titles-bar-wrap { position: relative; height: 1.1rem; }
+    .titles-name { font-size: 0.82rem; color: var(--ink); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .titles-flag { font-size: 1rem; text-align: center; }
+    .titles-bar-wrap { position: relative; height: 0.7rem; }
     .titles-bar {
       position: absolute; top: 50%; left: 0;
       height: 0.7rem; transform: translateY(-50%);
       background: var(--gd); border-radius: 3px;
     }
-    .titles-name { position: absolute; left: 0.5rem; top: 50%; transform: translateY(-50%); font-size: 0.78rem; color: #2A1E04; font-weight: 600; white-space: nowrap; }
-    .titles-flag { font-size: 1rem; }
     .titles-num { font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; min-width: 1.4rem; text-align: right; }
 
     /* ── Responsive ── */
-    @media (max-width: 900px) {
-      .rank-chart { min-width: 520px; }
-    }
     @media (max-width: 640px) {
       .groups-grid { grid-template-columns: repeat(3, 1fr); }
       .format-stats { gap: 0.75rem; }
@@ -1631,15 +1629,16 @@
       .bracket-row { grid-template-columns: 1.4rem 1fr auto; gap: 0.6rem; padding: 0.85rem 0.9rem; }
       .bracket-round-name { font-size: 1rem; }
       .bracket-sub { font-size: 0.7rem; }
-      .prize-table, .winners-table { font-size: 0.78rem; }
+      .prize-table, .winners-table { font-size: 0.74rem; }
       .ch-summary { padding: 0.8rem 0.9rem; gap: 0.7rem; }
       .ch-title { font-size: 0.95rem; }
       .ch-body { padding: 0.5rem 1rem 1.1rem; }
       .rules-toc-list a { font-size: 0.68rem; padding: 0.3rem 0.5rem; }
       .gloss-popup, .tt { max-width: 80vw; }
-      .timeline-grid { min-width: 680px; }
-      .rank-chart { min-width: 480px; }
-      .winners-table { min-width: 560px; }
+      .timeline-grid { min-width: 600px; }
+      .rank-chart { max-width: 100%; }
+      .rank-axis, .rankings-row { grid-template-columns: 5.5rem 1fr 2.4rem; gap: 0.4rem; }
+      .winners-table { min-width: 440px; }
       .day-nav-wrap { flex-wrap: wrap; gap: 0.6rem; }
     }
     @media (max-width: 380px) {
@@ -2238,11 +2237,7 @@
       </div>
       <p class="section-desc" style="margin-bottom:1.25rem">Each squad's home away from home for the group stage, where they train, recover, and stay. Hover any marker to see the team and its training site.</p>
       <div id="venues-map"></div>
-      <div class="venues-legend">
-        <div class="legend-item"><div class="legend-dot" style="background:#B5614A"></div>Based in USA</div>
-        <div class="legend-item"><div class="legend-dot" style="background:#4E8A68"></div>Based in Mexico</div>
-        <div class="legend-item"><div class="legend-dot" style="background:#3E6E9A"></div>Based in Canada</div>
-      </div>
+      <p class="section-desc" style="margin-top:0.85rem;font-size:0.75rem;color:var(--muted)">Markers are colored by group, matching The Groups grid above. Hover any marker for the team, its group, and training site.</p>
     </div>
   </section>
 
@@ -2435,43 +2430,51 @@
           <div class="titles-head">Titles Won · By Nation</div>
           <div class="titles-grid">
             <div class="titles-row">
+              <span class="titles-name">Brazil</span>
               <span class="titles-flag">🇧🇷</span>
-              <div class="titles-bar-wrap"><div class="titles-bar" style="width:100%"></div><span class="titles-name">Brazil</span></div>
+              <div class="titles-bar-wrap"><div class="titles-bar" style="width:100%"></div></div>
               <span class="titles-num">5</span>
             </div>
             <div class="titles-row">
+              <span class="titles-name">Italy</span>
               <span class="titles-flag">🇮🇹</span>
-              <div class="titles-bar-wrap"><div class="titles-bar" style="width:80%"></div><span class="titles-name">Italy</span></div>
+              <div class="titles-bar-wrap"><div class="titles-bar" style="width:80%"></div></div>
               <span class="titles-num">4</span>
             </div>
             <div class="titles-row">
+              <span class="titles-name">Germany</span>
               <span class="titles-flag">🇩🇪</span>
-              <div class="titles-bar-wrap"><div class="titles-bar" style="width:80%"></div><span class="titles-name">Germany</span></div>
+              <div class="titles-bar-wrap"><div class="titles-bar" style="width:80%"></div></div>
               <span class="titles-num">4</span>
             </div>
             <div class="titles-row">
+              <span class="titles-name">Argentina</span>
               <span class="titles-flag">🇦🇷</span>
-              <div class="titles-bar-wrap"><div class="titles-bar" style="width:60%"></div><span class="titles-name">Argentina</span></div>
+              <div class="titles-bar-wrap"><div class="titles-bar" style="width:60%"></div></div>
               <span class="titles-num">3</span>
             </div>
             <div class="titles-row">
+              <span class="titles-name">Uruguay</span>
               <span class="titles-flag">🇺🇾</span>
-              <div class="titles-bar-wrap"><div class="titles-bar" style="width:40%"></div><span class="titles-name">Uruguay</span></div>
+              <div class="titles-bar-wrap"><div class="titles-bar" style="width:40%"></div></div>
               <span class="titles-num">2</span>
             </div>
             <div class="titles-row">
+              <span class="titles-name">France</span>
               <span class="titles-flag">🇫🇷</span>
-              <div class="titles-bar-wrap"><div class="titles-bar" style="width:40%"></div><span class="titles-name">France</span></div>
+              <div class="titles-bar-wrap"><div class="titles-bar" style="width:40%"></div></div>
               <span class="titles-num">2</span>
             </div>
             <div class="titles-row">
+              <span class="titles-name">England</span>
               <span class="titles-flag">🏴󠁧󠁢󠁥󠁮󠁧󠁿</span>
-              <div class="titles-bar-wrap"><div class="titles-bar" style="width:20%"></div><span class="titles-name">England</span></div>
+              <div class="titles-bar-wrap"><div class="titles-bar" style="width:20%"></div></div>
               <span class="titles-num">1</span>
             </div>
             <div class="titles-row">
+              <span class="titles-name">Spain</span>
               <span class="titles-flag">🇪🇸</span>
-              <div class="titles-bar-wrap"><div class="titles-bar" style="width:20%"></div><span class="titles-name">Spain</span></div>
+              <div class="titles-bar-wrap"><div class="titles-bar" style="width:20%"></div></div>
               <span class="titles-num">1</span>
             </div>
           </div>
@@ -3342,15 +3345,36 @@ function initMap() {
   });
   cartoTiles.addTo(map);
 
-  const countryColor = { USA:'#B5614A', Mexico:'#4E8A68', Canada:'#3E6E9A' };
+  // Color each base camp marker by its group (matching The Groups / timeline)
+  const NEUTRAL_MK = '#9A9384';
+  function nrm(s){ return s.toLowerCase().replace(/&/g,'and').replace(/[^a-z]/g,''); }
+  const teamGroupMk = {};
+  if (typeof GROUPS !== 'undefined') {
+    Object.entries(GROUPS).forEach(([L, g]) => {
+      (g.teams || []).forEach(t => { teamGroupMk[nrm(t.name)] = L; });
+    });
+  }
+  const ALIAS_MK = { capeverde:'caboverde', ivorycoast:'cotedivoire', cotedivoire:'cotedivoire', drcongo:'congodr', congodr:'congodr' };
+  function groupForTeam(name) {
+    let k = nrm(name);
+    if (teamGroupMk[k]) return teamGroupMk[k];
+    if (ALIAS_MK[k] && teamGroupMk[ALIAS_MK[k]]) return teamGroupMk[ALIAS_MK[k]];
+    return null;
+  }
+  function markerColor(team) {
+    const g = groupForTeam(team);
+    return (g && typeof GROUP_COLORS !== 'undefined' && GROUP_COLORS[g]) ? GROUP_COLORS[g] : NEUTRAL_MK;
+  }
 
   BASECAMPS.forEach(b => {
+    const g = groupForTeam(b.team);
+    const grpLine = g ? `GROUP ${g} · ` : '';
     const ttHtml = `<div class="tt-vcity">${b.flag} ${b.team}</div>` +
       `<div class="tt-vstadium">${b.site}</div>` +
-      `<div class="tt-vgame" style="margin-top:0.35rem"><span style="color:rgba(255,255,255,.55);font-size:.65rem">BASED IN ${b.city.toUpperCase()}</span></div>`;
+      `<div class="tt-vgame" style="margin-top:0.35rem"><span style="color:rgba(255,255,255,.55);font-size:.65rem">${grpLine}BASED IN ${b.city.toUpperCase()}</span></div>`;
 
     L.circleMarker([b.lat, b.lng], {
-      radius: 7, fillColor: countryColor[b.country],
+      radius: 7, fillColor: markerColor(b.team),
       color:'#fff', weight: 2, opacity:1, fillOpacity: 0.9
     })
     .on('mouseover', function(e) { showTT(e.originalEvent, ttHtml); })
