@@ -112,6 +112,21 @@ section{padding:clamp(4rem,10vw,9rem) clamp(1.2rem,5vw,4rem);position:relative;z
 .contact-links a:hover{color:var(--accent)}
 footer{padding:2rem clamp(1.2rem,5vw,4rem);border-top:1px solid var(--line-solid);display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;font-family:var(--mono);font-size:.72rem;color:var(--muted);position:relative;z-index:1;background:var(--bg)}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.hero h1 .line span{transform:none}.hero-sub,.hero-meta,.reveal{opacity:1;transform:none}.boot-name{opacity:1;transform:none}}
+
+/* ── Intro overlay ──────────────────────────────────────────── */
+#intro{position:fixed;inset:0;z-index:999;background:#0d1117;overflow-y:scroll;scrollbar-width:none;pointer-events:none;transition:transform .9s cubic-bezier(.76,0,.24,1)}
+#intro::-webkit-scrollbar{display:none}
+#intro.done{transform:translateY(-100%)}
+.intro-sticky{position:sticky;top:0;padding:1.4rem clamp(1.2rem,5vw,4rem);z-index:2;pointer-events:none}
+.intro-label{font-family:var(--mono);font-size:clamp(.65rem,1.4vw,.8rem);letter-spacing:.18em;color:rgba(88,166,255,.55);text-transform:lowercase}
+.intro-spacer{height:50vh}
+.intro-list{list-style:none;padding:0 clamp(1.2rem,5vw,4rem);margin:0}
+.intro-list li{font-family:var(--display);font-size:clamp(2.2rem,6.5vw,5.5rem);font-weight:700;line-height:1.2;padding:.18em 0;background:linear-gradient(180deg,rgba(255,255,255,.1) 0 calc(50vh - 1.3rem),hsl(280,88%,74%) calc(50vh - 1.4rem) calc(50vh + 1.4rem),rgba(255,255,255,.1) calc(50vh + 1.3rem));background-attachment:fixed;color:transparent;-webkit-background-clip:text;background-clip:text}
+.intro-bio{background:linear-gradient(180deg,rgba(255,255,255,.1) 0 calc(50vh - 1.3rem),var(--accent) calc(50vh - 1.4rem) calc(50vh + 1.4rem),rgba(255,255,255,.1) calc(50vh + 1.3rem))!important;background-attachment:fixed!important;-webkit-background-clip:text!important;background-clip:text!important}
+
+/* ── Section scroll snap ────────────────────────────────────── */
+html{scroll-snap-type:y mandatory}
+.hero,#focus,#experience,#education,#research,#skills,#contact{scroll-snap-align:start}
 </style>
 </head>
 <body>
@@ -139,6 +154,19 @@ footer{padding:2rem clamp(1.2rem,5vw,4rem);border-top:1px solid var(--line-solid
       </div>
     </div>
   </div>
+</div>
+<div id="intro">
+  <div class="intro-sticky"><span class="intro-label">this is me...</span></div>
+  <div class="intro-spacer"></div>
+  <ul class="intro-list">
+    <li>watching futbol</li>
+    <li>drinking coffee</li>
+    <li>running</li>
+    <li>pipetting</li>
+    <li>playing mahjong</li>
+    <li class="intro-bio">bio</li>
+  </ul>
+  <div class="intro-spacer"></div>
 </div>
 <nav>
   <a href="#top" class="brand">JP&#8260;</a>
@@ -310,14 +338,36 @@ const bootCount = loader.querySelector('.boot-counter');
 const bootBarFill = loader.querySelector('.boot-bar-fill');
 const bootLines = loader.querySelectorAll('.boot-line');
 
+const intro = document.getElementById('intro');
+
+function finishIntro() {
+  intro.classList.add('done');
+  document.body.classList.add('loaded');
+  setTimeout(() => { intro.style.display = 'none'; }, 1000);
+}
+
+function startIntroSequence() {
+  const items = [...intro.querySelectorAll('.intro-list li')];
+  const holds = [420, 420, 420, 420, 420, 850];
+  let idx = 0;
+  function advance() {
+    if (idx >= items.length) { setTimeout(finishIntro, 350); return; }
+    items[idx].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setTimeout(advance, holds[idx] + 580);
+    idx++;
+  }
+  setTimeout(advance, 380);
+}
+
 function revealPage() {
   loader.classList.add('done');
   loader.setAttribute('aria-hidden', 'true');
-  document.body.classList.add('loaded');
+  startIntroSequence();
 }
 
 if (reduce) {
   loader.style.display = 'none';
+  intro.style.display = 'none';
   document.body.classList.add('loaded');
 } else {
   [0, 400, 900].forEach((delay, i) => {
@@ -340,7 +390,14 @@ if (reduce) {
     }
   }
   requestAnimationFrame(tickBoot);
-  setTimeout(() => { if (!document.body.classList.contains('loaded')) revealPage(); }, 4000);
+  setTimeout(() => {
+    if (!document.body.classList.contains('loaded')) {
+      intro.style.display = 'none';
+      loader.classList.add('done');
+      loader.setAttribute('aria-hidden', 'true');
+      document.body.classList.add('loaded');
+    }
+  }, 9000);
 }
 
 // ── Scroll reveal ──────────────────────────────────────────────
