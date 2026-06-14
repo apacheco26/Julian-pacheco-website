@@ -25,7 +25,6 @@ html{scroll-behavior:smooth;scroll-snap-type:y proximity}
 body{background:var(--bg);color:var(--ink);font-family:var(--body);-webkit-font-smoothing:antialiased;line-height:1.5;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
 ::selection{background:var(--accent);color:var(--bg)}
-#cells{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
 #loader{position:fixed;inset:0;z-index:1000;background:#0d1117;display:flex;align-items:center;justify-content:center;transition:transform .8s cubic-bezier(.76,0,.24,1);pointer-events:all}
 #loader.done{transform:translateY(-100%);pointer-events:none}
 .boot-terminal{width:min(620px,92vw);background:#0d1117;border:1px solid #30363d;border-radius:10px;overflow:hidden;box-shadow:0 32px 96px rgba(0,0,0,.7);font-family:var(--mono)}
@@ -52,7 +51,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content
 .nav-links a::after{content:"";position:absolute;left:0;bottom:-4px;width:0;height:1px;background:#fff;transition:width .3s}
 .nav-links a:hover::after{width:100%}
 @media(max-width:600px){.nav-links a:not(.nav-cta){display:none}}
-.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:0 clamp(1.2rem,5vw,4rem);z-index:1;scroll-snap-align:start}
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:0 clamp(1.2rem,5vw,4rem);z-index:1;scroll-snap-align:start;text-align:center}
 .eyebrow{font-family:var(--mono);font-size:.8rem;color:var(--accent);letter-spacing:.08em;margin-bottom:1.5rem;display:flex;align-items:center;gap:.6rem}
 .eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent)}
 .hero h1{font-family:var(--display);font-weight:600;font-size:clamp(3.8rem,20vw,18rem);line-height:.9;letter-spacing:-.04em}
@@ -135,7 +134,12 @@ html{overscroll-behavior-y:none}
 /* ── Hero mountain background ───────────────────────────────── */
 .hero-bg-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%;z-index:0;opacity:.55;pointer-events:none}
 .hero-bg-gradient{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(to bottom,rgba(0,0,0,.18) 0%,rgba(0,0,0,.0) 40%,rgba(10,12,11,.85) 100%)}
-.hero-inner{position:relative;z-index:2;max-width:1400px}
+.hero-inner{position:relative;z-index:2;max-width:1400px;text-align:center}
+.hero-discipline{font-family:var(--mono);font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.65);margin-bottom:1.8rem;opacity:0;transform:translateY(12px);transition:opacity .8s ease .3s,transform .8s ease .3s}
+.loaded .hero-discipline{opacity:1;transform:translateY(0)}
+.hero-scroll{position:absolute;bottom:8vh;left:50%;transform:translateX(-50%);z-index:3;text-align:center;font-family:var(--mono);font-size:.7rem;letter-spacing:.35em;color:rgba(255,255,255,.75);pointer-events:none;opacity:0;transition:opacity 1s ease 1s}
+.loaded .hero-scroll{opacity:1}
+.hero-scroll-line{width:1px;height:54px;background:rgba(255,255,255,.62);margin:14px auto 0}
 
 /* ── Sticky scroll background (content sections) ─────────────── */
 .pg-bg-wrap{position:relative}
@@ -202,7 +206,6 @@ html{overscroll-behavior-y:none}
 </style>
 </head>
 <body>
-<canvas id="cells"></canvas>
 <div id="loader" aria-label="Loading">
   <div class="boot-terminal">
     <div class="term-titlebar">
@@ -261,42 +264,15 @@ html{overscroll-behavior-y:none}
   <img src="assets/bg1-mountain.jpg" class="hero-bg-img" alt="">
   <div class="hero-bg-gradient"></div>
   <div class="hero-inner">
+    <p class="hero-discipline">Biomedical Research &middot; Data Science &middot; Machine Learning</p>
     <h1>
       <span class="line"><span>Julian</span></span>
       <span class="line"><span><em>Pacheco</em></span></span>
     </h1>
-    <p class="hero-sub">Biomedical researcher in vaccine and gene therapy development, applying data science and machine learning to accelerate therapeutic discovery and development.</p>
-    <div class="hero-icons">
-      <div class="hero-icon-item">
-        <svg viewBox="0 0 24 24"><path d="M2 3c0 0 5 1.5 8 3.5C13 8.5 14 9 14 10c0 1-1 1.5-3.5 2S4 14 4 16c0 2 2 3 5.5 4.5S15 23 15 23"/><path d="M22 3c0 0-5 1.5-8 3.5C11 8.5 10 9 10 10c0 1 1 1.5 3.5 2S20 14 20 16c0 2-2 3-5.5 4.5S9 23 9 23"/></svg>
-        <span class="hero-icon-label">Gene Therapy<br>Innovation</span>
-      </div>
-      <div class="hero-icon-item">
-        <svg viewBox="0 0 24 24"><rect x="3" y="12" width="4" height="9"/><rect x="10" y="7" width="4" height="14"/><rect x="17" y="3" width="4" height="18"/><line x1="1" y1="21" x2="23" y2="21"/></svg>
-        <span class="hero-icon-label">Data Science<br>&amp; Analytics</span>
-      </div>
-      <div class="hero-icon-item">
-        <svg viewBox="0 0 24 24"><path d="M9.5 2A2.5 2.5 0 0 0 7 4.5c0 .9.5 1.7 1.2 2.2A3.5 3.5 0 0 0 5 10a3.5 3.5 0 0 0 2.3 3.3V16h9v-2.7A3.5 3.5 0 0 0 19 10a3.5 3.5 0 0 0-3.2-3.5A2.5 2.5 0 0 0 14.5 2h-5z"/><line x1="12" y1="2" x2="12" y2="16"/><path d="M9 6.5c.7.8.7 2 0 3"/><path d="M15 6.5c-.7.8-.7 2 0 3"/></svg>
-        <span class="hero-icon-label">Machine Learning<br>&amp; AI</span>
-      </div>
-      <div class="hero-icon-item">
-        <svg viewBox="0 0 24 24"><path d="M12 22s9-4.5 9-10.5V5l-9-3-9 3v6.5C3 17.5 12 22 12 22z"/><line x1="12" y1="9" x2="12" y2="16"/><line x1="8.5" y1="12.5" x2="15.5" y2="12.5"/></svg>
-        <span class="hero-icon-label">Advancing<br>Human Health</span>
-      </div>
-    </div>
-    <div class="hero-badge-wrap">
-      <span class="hero-badge">
-        <svg viewBox="0 0 24 24"><polygon points="12 2 22 8.5 12 15 2 8.5"/><path d="M6 12v5c0 2 2.7 3.5 6 3.5s6-1.5 6-3.5v-5"/><line x1="22" y1="8.5" x2="22" y2="15"/></svg>
-        M.S. in Data Science
-      </span>
-      <span class="hero-badge">
-        <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="17"/><line x1="8" y1="14.5" x2="16" y2="14.5"/></svg>
-        Biomedical Researcher &middot; Vaccine and Gene Therapy Institute
-      </span>
-    </div>
   </div>
-  <div class="hero-meta">
-    <div class="scroll-hint"><svg class="scroll-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>SCROLL</div>
+  <div class="hero-scroll">
+    SCROLL
+    <div class="hero-scroll-line"></div>
   </div>
 </header>
 
@@ -678,185 +654,18 @@ if (!reduce) {
   });
 }
 
-// ── Canvas + particle morphing ─────────────────────────────────
-const canvas = document.getElementById('cells');
-const ctx = canvas.getContext('2d');
-let W, H, points = [], morphTargets = null;
-
-// Shape library (normalized 0-1 coords, generated after each resize)
-let shapes = {};
-
-function genShapes() {
-  function line(x1, y1, x2, y2, n) {
-    return Array.from({length: n}, (_, i) => ({
-      x: x1 + (x2 - x1) * i / Math.max(n - 1, 1),
-      y: y1 + (y2 - y1) * i / Math.max(n - 1, 1)
-    }));
-  }
-  function arc(cx, cy, rx, ry, n) {
-    return Array.from({length: n}, (_, i) => {
-      const a = (2 * Math.PI * i) / n;
-      return {x: cx + rx * Math.cos(a), y: cy + ry * Math.sin(a)};
-    });
-  }
-  function scatter(x, y, w, h, n) {
-    return Array.from({length: n}, () => ({x: x + Math.random() * w, y: y + Math.random() * h}));
-  }
-
-  // Lab: pipette (left) + Erlenmeyer flask (right)
-  shapes.lab = [
-    ...line(0.32, 0.15, 0.32, 0.65, 12),   // pipette body
-    ...arc(0.32, 0.68, 0.05, 0.04, 8),      // pipette bulb
-    ...line(0.32, 0.73, 0.32, 0.86, 5),     // pipette tip
-    ...line(0.60, 0.18, 0.60, 0.38, 7),     // flask neck L
-    ...line(0.64, 0.18, 0.64, 0.38, 7),     // flask neck R
-    ...line(0.60, 0.38, 0.44, 0.75, 9),     // flask body L slope
-    ...line(0.64, 0.38, 0.80, 0.75, 9),     // flask body R slope
-    ...line(0.44, 0.75, 0.80, 0.75, 9),     // flask bottom
-    ...scatter(0.52, 0.46, 0.20, 0.22, 8),  // liquid bubbles
-  ];
-
-  // Desert: mesa butte (left) + saguaro cactus (right) + horizon + sun
-  shapes.desert = [
-    ...line(0.05, 0.68, 0.95, 0.68, 13),   // horizon
-    ...line(0.07, 0.68, 0.27, 0.43, 10),   // mesa left slope
-    ...line(0.27, 0.43, 0.48, 0.43, 8),    // mesa plateau
-    ...line(0.48, 0.43, 0.58, 0.68, 8),    // mesa right slope
-    ...line(0.73, 0.40, 0.73, 0.68, 10),   // cactus body
-    ...line(0.63, 0.52, 0.73, 0.52, 5),    // cactus left arm H
-    ...line(0.63, 0.45, 0.63, 0.52, 4),    // cactus left arm V
-    ...line(0.73, 0.50, 0.83, 0.50, 5),    // cactus right arm H
-    ...line(0.83, 0.43, 0.83, 0.50, 4),    // cactus right arm V
-    ...arc(0.86, 0.24, 0.07, 0.07, 8),     // sun
-    ...scatter(0.05, 0.70, 0.90, 0.10, 9), // ground texture
-  ];
-
-  // Education: neoclassical building with columns + pediment
-  shapes.education = [
-    ...line(0.22, 0.42, 0.22, 0.78, 10),   // left wall
-    ...line(0.78, 0.42, 0.78, 0.78, 10),   // right wall
-    ...line(0.22, 0.78, 0.78, 0.78, 10),   // base
-    ...line(0.22, 0.42, 0.50, 0.22, 10),   // pediment left
-    ...line(0.50, 0.22, 0.78, 0.42, 10),   // pediment right
-    ...line(0.22, 0.42, 0.78, 0.42, 8),    // entablature
-    ...line(0.36, 0.42, 0.36, 0.78, 5),    // column 1
-    ...line(0.50, 0.42, 0.50, 0.78, 5),    // column 2
-    ...line(0.64, 0.42, 0.64, 0.78, 5),    // column 3
-    ...scatter(0.10, 0.08, 0.80, 0.12, 7), // knowledge dots
-  ];
-}
-
-function setMorphState(state) {
-  morphTargets = (state !== 'free' && shapes[state]) ? shapes[state] : null;
-}
-
-function size() {
-  W = canvas.width = canvas.offsetWidth * devicePixelRatio;
-  H = canvas.height = canvas.offsetHeight * devicePixelRatio;
-}
-
-function seed() {
-  points = [];
-  const c = Math.min(220, Math.floor(W * H / 10000));
-  for (let i = 0; i < c; i++) {
-    const cl = Math.random();
-    let cx, cy;
-    if (cl < .4) { cx = W * .7; cy = H * .55; }
-    else if (cl < .7) { cx = W * .3; cy = H * .4; }
-    else { cx = Math.random() * W; cy = Math.random() * H; }
-    const a = Math.random() * .5 + .15;
-    points.push({
-      x: cl < .7 ? cx + (Math.random() - .5) * W * .35 : cx,
-      y: cl < .7 ? cy + (Math.random() - .5) * H * .35 : cy,
-      vx: (Math.random() - .5) * .12,
-      vy: (Math.random() - .5) * .12,
-      r: (Math.random() * 1.6 + .6) * devicePixelRatio,
-      a
-    });
-  }
-  genShapes();
-}
-
-function draw() {
-  ctx.clearRect(0, 0, W, H);
-  const isMorphed = morphTargets !== null;
-
-  // Update positions
-  points.forEach((p, i) => {
-    if (isMorphed && i < morphTargets.length) {
-      p.x += (morphTargets[i].x * W - p.x) * 0.045;
-      p.y += (morphTargets[i].y * H - p.y) * 0.045;
-    } else {
-      p.x += p.vx; p.y += p.vy;
-      if (p.x < 0 || p.x > W) p.vx *= -1;
-      if (p.y < 0 || p.y > H) p.vy *= -1;
-    }
-  });
-
-  // Draw connecting lines
-  const lineThresh = (isMorphed ? 70 : 110) * devicePixelRatio;
-  const lineAlpha = isMorphed ? 0.18 : 0.05;
-  for (let i = 0; i < points.length; i++) {
-    for (let j = i + 1; j < points.length; j++) {
-      const d = Math.hypot(points[i].x - points[j].x, points[i].y - points[j].y);
-      if (d < lineThresh) {
-        ctx.strokeStyle = `rgba(61,255,192,${lineAlpha * (1 - d / lineThresh)})`;
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(points[i].x, points[i].y);
-        ctx.lineTo(points[j].x, points[j].y);
-        ctx.stroke();
-      }
-    }
-  }
-
-  // Draw dots
-  if (isMorphed) {
-    ctx.shadowColor = 'rgba(61,255,192,0.55)';
-    ctx.shadowBlur = 7 * devicePixelRatio;
-  }
-  points.forEach((p, i) => {
-    const targeted = isMorphed && i < morphTargets.length;
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.r * (targeted ? 1.4 : 1), 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(61,255,192,${targeted ? 0.88 : (isMorphed ? p.a * 0.22 : p.a)})`;
-    ctx.fill();
-  });
-  if (isMorphed) { ctx.shadowBlur = 0; ctx.shadowColor = 'transparent'; }
-
-  if (!reduce) requestAnimationFrame(draw);
-}
-
-function init() { size(); seed(); draw(); }
-window.addEventListener('resize', () => { size(); seed(); });
-init();
-
-// ── Morph on scroll ────────────────────────────────────────────
-if (!reduce) {
-  const morphObs = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) setMorphState(e.target.dataset.morph || 'free'); });
-  }, {threshold: 0.25});
-  document.querySelectorAll('[data-morph]').forEach(el => morphObs.observe(el));
-
-  // Reset to free when hero is back in view
-  const heroObs = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) setMorphState('free'); });
-  }, {threshold: 0.2});
-  heroObs.observe(document.querySelector('.hero'));
-}
-
 // ── Hero scroll exit ───────────────────────────────────────────
 if (!reduce) {
-  const heroInner = document.querySelector('.hero-inner');
-  const heroMeta  = document.querySelector('.hero-meta');
-  const heroEl    = document.querySelector('.hero');
+  const heroInner  = document.querySelector('.hero-inner');
+  const heroScroll = document.querySelector('.hero-scroll');
+  const heroEl     = document.querySelector('.hero');
 
   window.addEventListener('scroll', function() {
     const t = Math.max(0, Math.min(1, window.scrollY / (heroEl.offsetHeight * 0.65)));
     const opacity = Math.max(0, 1 - t * 1.4);
     heroInner.style.opacity = opacity;
     heroInner.style.transform = 'translateY(' + (-t * 80) + 'px)';
-    heroMeta.style.opacity = opacity;
+    if (heroScroll) heroScroll.style.opacity = Math.max(0, 0.8 - t * 1.8);
   }, { passive: true });
 }
 
