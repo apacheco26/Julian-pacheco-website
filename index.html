@@ -99,6 +99,7 @@ section{padding:clamp(2.5rem,6vw,5rem) clamp(1.2rem,5vw,4rem);position:relative;
 .pub .year{font-family:var(--mono);font-size:.82rem;color:var(--accent);flex-shrink:0;width:3rem}
 .pub .pub-body{flex:1}
 .pub .pub-title{font-size:1.05rem;font-weight:500;margin-bottom:.25rem}
+.pub .pub-title strong{color:var(--accent);font-weight:600}
 .pub .pub-venue{color:var(--muted);font-size:.9rem;font-family:var(--mono)}
 .pub .pub-type{font-family:var(--mono);font-size:.68rem;color:var(--bg);background:var(--accent);padding:.15rem .5rem;border-radius:4px;flex-shrink:0;text-transform:uppercase;letter-spacing:.04em}
 .pub .pub-type.talk{background:var(--accent-dim);color:var(--ink)}
@@ -146,7 +147,8 @@ html{overscroll-behavior-y:none}
 .loaded .hero-discipline{opacity:1;transform:translateY(0)}
 .hero-scroll{position:absolute;bottom:8vh;left:50%;transform:translateX(-50%);z-index:3;text-align:center;font-family:var(--mono);font-size:.7rem;letter-spacing:.35em;color:rgba(255,255,255,.75);pointer-events:none;opacity:0;transition:opacity 1s ease 1s}
 .loaded .hero-scroll{opacity:1}
-.hero-scroll-line{width:1px;height:54px;background:rgba(255,255,255,.62);margin:14px auto 0}
+.hero-scroll-line{width:1px;height:54px;background:rgba(255,255,255,.62);margin:14px auto 0;position:relative}
+.hero-scroll-line::after{content:"";position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);border-left:4px solid transparent;border-right:4px solid transparent;border-top:6px solid rgba(255,255,255,.62)}
 
 /* ── Sticky scroll background (content sections) ─────────────── */
 .pg-bg-wrap{position:relative}
@@ -188,15 +190,6 @@ html{overscroll-behavior-y:none}
   }
   @keyframes hero-exit{to{opacity:0;translate:0 -1.5rem;scale:.97}}
 
-  /* Each section clips up from the bottom edge as it enters */
-  section{
-    view-timeline:--sec-vt;
-    clip-path:inset(7% 0 0 0);
-    animation:sec-enter both linear;
-    animation-timeline:--sec-vt;
-    animation-range:entry 0% entry 30%
-  }
-  @keyframes sec-enter{to{clip-path:inset(0% 0 0 0)}}
 }}
 </style>
 </head>
@@ -301,7 +294,7 @@ html{overscroll-behavior-y:none}
   </div>
 </section>
 <section id="research" data-morph="lab">
-  <div class="section-head"><span class="section-num">04</span><h2>Research &amp; Presentations</h2></div>
+  <div class="section-head"><span class="section-num">04</span><h2>Research &amp; Contributions</h2></div>
   <div class="pub reveal">
     <div class="year">2026</div>
     <div class="pub-body">
@@ -497,30 +490,6 @@ if (reduce) {
 
   async function run() {
     await sleep(300);
-    line('dim', 'Last login: Thu Jun 18 09:14:22 on ttys001');
-    line('', '');
-    line('dim', 'Loading environment...');
-    append(`<span class="line loading-bar-wrap"><div class="loading-bar-bg"><div class="loading-bar-fill" id="lbar1"></div></div></span>`);
-    await loadingBar('lbar1');
-    line('ok', '✓ Environment loaded');
-    line('', '');
-
-    await typeCmd('~$', 'local', 'cd Julian/projects');
-    await sleep(160);
-    await typeCmd('~/Julian/projects$', 'local', 'ls');
-    await sleep(200);
-    line('path', 'world_cup_app/   metro_dashboard/   capstone/   notebooks/   data_pipeline/   ml_models/   resume.txt   requirements.txt   config.yaml   README.md');
-    line('', '');
-
-    await typeCmd('~/Julian/projects$', 'local', 'open resume.txt');
-    await sleep(400);
-    line('err', "resume.txt: outdated — latest version on julian_pa. Run: ssh msd_grad@julian_pa");
-    line('', '');
-
-    await typeCmd('~/Julian/projects$', 'local', 'cd ~');
-    await sleep(300);
-    line('', '');
-
     await typeCmd('~$', 'local', 'ssh msd_grad@julian_pa -p 2026', 58);
     await sleep(600);
 
