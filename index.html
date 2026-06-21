@@ -439,14 +439,14 @@ if (reduce) {
   function line(cls, text) { append(`<span class="line ${cls}">${text}</span>`); }
   function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
-  async function typeCmd(promptText, promptCls, cmd, delay=82) {
+  async function typeCmd(promptText, promptCls, cmd, delay=48) {
     let partial = '';
     append(`<span class="line"><span class="${promptCls}">${promptText}</span> <span class="cmd" id="typing"></span><span class="cursor"></span></span>`);
     for (const ch of cmd) {
       partial += ch;
       const el = tb.querySelector('#typing');
       if (el) el.textContent = partial;
-      await sleep(delay + Math.random()*45);
+      await sleep(delay + Math.random()*25);
     }
     html = html
       .replace('<span class="cursor"></span></span>', '</span>')
@@ -454,28 +454,28 @@ if (reduce) {
     append('');
   }
 
-  async function typeThenCorrect(promptText, promptCls, wrong, correct, delay=82) {
+  async function typeThenCorrect(promptText, promptCls, wrong, correct, delay=48) {
     let partial = '';
     append(`<span class="line"><span class="${promptCls}">${promptText}</span> <span class="cmd" id="typing"></span><span class="cursor"></span></span>`);
     for (const ch of wrong) {
       partial += ch;
       const el = tb.querySelector('#typing');
       if (el) el.textContent = partial;
-      await sleep(delay + Math.random()*45);
+      await sleep(delay + Math.random()*25);
     }
-    await sleep(320);
+    await sleep(180);
     while (partial.length > 0) {
       partial = partial.slice(0, -1);
       const el = tb.querySelector('#typing');
       if (el) el.textContent = partial;
-      await sleep(48 + Math.random()*20);
+      await sleep(30 + Math.random()*15);
     }
-    await sleep(200);
+    await sleep(120);
     for (const ch of correct) {
       partial += ch;
       const el = tb.querySelector('#typing');
       if (el) el.textContent = partial;
-      await sleep(delay + Math.random()*40);
+      await sleep(delay + Math.random()*25);
     }
     html = html
       .replace('<span class="cursor"></span></span>', '</span>')
@@ -483,30 +483,30 @@ if (reduce) {
     append('');
   }
 
-  async function loadingBar(id, speed=28) {
+  async function loadingBar(id, speed=10) {
     const bar = document.getElementById(id);
     for (let i=0; i<=100; i+=2) { if(bar) bar.style.width = i+'%'; await sleep(speed); }
   }
 
   async function run() {
-    await sleep(300);
-    await typeCmd('~$', 'local', 'ssh msd_grad@julian_pa -p 2026', 58);
-    await sleep(600);
+    await sleep(180);
+    await typeCmd('~$', 'local', 'ssh msd_grad@julian_pa -p 2026', 35);
+    await sleep(350);
 
     append(`<span class="line ssh-box"><span class="dim">The authenticity of host 'julian_pa (192.168.2.26)' can't be established.</span><br><span class="dim">ED25519 key fingerprint is SHA256:xK9mTq2Lv8Rn3Wp7Yz4Jd1Fb6Uc0Oe5Nh.</span><br><span class="warn">Are you sure you want to continue connecting (yes/no)?</span></span>`);
-    await sleep(1100);
-    await typeCmd('', 'dim', 'yes', 70);
-    await sleep(400);
+    await sleep(600);
+    await typeCmd('', 'dim', 'yes', 45);
+    await sleep(220);
     line('warn', "Warning: Permanently added 'julian_pa' (ED25519) to the list of known hosts.");
-    await sleep(300);
+    await sleep(160);
     line('dim', "msd_grad@julian_pa's password: ");
-    await sleep(900);
-    line('dim', '................');
     await sleep(500);
+    line('dim', '................');
+    await sleep(280);
 
     append(`<span class="line loading-bar-wrap"><div class="loading-bar-bg"><div class="loading-bar-fill" id="lbar2"></div></div></span>`);
-    await loadingBar('lbar2', 18);
-    await sleep(300);
+    await loadingBar('lbar2', 10);
+    await sleep(160);
 
     append(`<span class="line motd">
   ┌─────────────────────────────────────────────┐<br>
@@ -516,31 +516,31 @@ if (reduce) {
   └─────────────────────────────────────────────┘<br>
   <span class="dim">last login: Wed Jun 17 22:41:09 2026 from 10.0.0.4</span>
 </span>`);
-    await sleep(500);
+    await sleep(280);
 
     await typeCmd('msd_grad@julian_pa:~$', 'remote', 'ls -a');
-    await sleep(200);
+    await sleep(120);
     line('path', '.who_is_julian/   research_notes/   capstone_housing/   fun_ml_projects/   marathon_logs/   concert_list/   coursework/   scripts/   world_cup_tracker/   .env   .bashrc   .gitconfig');
     line('', '');
 
     await typeThenCorrect('msd_grad@julian_pa:~$', 'remote', 'cd who_is_julian', 'cd .who_is_julian');
-    await sleep(160);
+    await sleep(100);
     await typeCmd('msd_grad@julian_pa:~/.who_is_julian$', 'remote', 'ls');
-    await sleep(200);
+    await sleep(120);
     line('path', 'story/   toolkit/   research/   index.html');
     line('', '');
 
     await typeCmd('msd_grad@julian_pa:~/.who_is_julian$', 'remote', 'cd story');
-    await sleep(300);
+    await sleep(160);
     line('ok', 'Changed to directory: ~/.who_is_julian/story');
     line('', '');
 
     await typeCmd('msd_grad@julian_pa:~/.who_is_julian/story$', 'remote', 'open julian_pacheco_portfolio.html');
-    await sleep(500);
+    await sleep(300);
     line('ok', 'Opening julian_pacheco_portfolio.html...');
     line('', '');
 
-    setTimeout(revealPage, 600);
+    setTimeout(revealPage, 900);
   }
 
   run();
