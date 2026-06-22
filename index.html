@@ -210,10 +210,14 @@ html{overscroll-behavior-y:none}
 .resume-modal{position:relative;width:min(860px,92vw);height:min(90vh,1100px);background:#0e1012;border-radius:14px;border:1px solid rgba(255,255,255,.09);overflow:hidden;transform-origin:var(--genie-ox,50%) var(--genie-oy,100%)}
 .resume-overlay.is-open .resume-modal{animation:genie-open .68s cubic-bezier(.19,1,.22,1) both}
 .resume-overlay.is-closing .resume-modal{animation:genie-close .42s ease-in both}
-.resume-modal iframe{width:100%;height:100%;border:none;display:block}
+.resume-modal-scroll{width:100%;height:100%;overflow-y:auto;overflow-x:hidden;display:flex;flex-direction:column;gap:0;background:#fff}
+.resume-modal-scroll img{width:100%;display:block;flex-shrink:0}
 .resume-modal-close{position:absolute;top:14px;right:14px;z-index:10;width:36px;height:36px;border-radius:50%;background:rgba(20,20,20,.9);border:1px solid rgba(255,255,255,.15);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s,border-color .2s;flex-shrink:0}
 .resume-modal-close:hover{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.3)}
 .resume-modal-close svg{width:13px;height:13px;stroke:currentColor;stroke-width:2.5;stroke-linecap:round;fill:none}
+.resume-modal-dl{position:absolute;top:14px;right:58px;z-index:10;height:36px;padding:0 14px;border-radius:18px;background:rgba(20,20,20,.9);border:1px solid rgba(255,255,255,.15);color:#fff;cursor:pointer;display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;transition:background .2s,border-color .2s}
+.resume-modal-dl:hover{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.3)}
+.resume-modal-dl svg{width:12px;height:12px;stroke:currentColor;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;fill:none;flex-shrink:0}
 
 @keyframes genie-open{
   0%  {clip-path:polygon(48% 100%,52% 100%,52% 100%,48% 100%);transform:scaleY(.03);opacity:0}
@@ -475,7 +479,14 @@ html{overscroll-behavior-y:none}
     <button class="resume-modal-close" id="resume-close-btn" aria-label="Close resume">
       <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
     </button>
-    <iframe src="assets/resume.pdf#toolbar=0&navpanes=0&scrollbar=0" title="Julian Pacheco Resume"></iframe>
+    <a class="resume-modal-dl" href="assets/resume.pdf" download="Julian_Pacheco_Resume.pdf" aria-label="Download resume PDF">
+      <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      PDF
+    </a>
+    <div class="resume-modal-scroll">
+      <img src="assets/resume-p1.jpg" alt="Julian Pacheco Resume page 1" loading="eager">
+      <img src="assets/resume-p2.jpg" alt="Julian Pacheco Resume page 2" loading="lazy">
+    </div>
   </div>
 </div>
 
