@@ -475,7 +475,7 @@ html{overscroll-behavior-y:none}
     <button class="resume-modal-close" id="resume-close-btn" aria-label="Close resume">
       <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
     </button>
-    <iframe src="assets/resume.pdf" title="Julian Pacheco Resume"></iframe>
+    <iframe src="assets/resume.pdf#toolbar=0&navpanes=0&scrollbar=0" title="Julian Pacheco Resume"></iframe>
   </div>
 </div>
 
@@ -491,8 +491,8 @@ const loader = document.getElementById('loader');
 function revealPage() {
   loader.classList.add('done');
   loader.setAttribute('aria-hidden', 'true');
-  document.body.classList.add('loaded');
   document.documentElement.style.overflow = '';
+  setTimeout(() => { document.body.classList.add('loaded'); }, 850);
   setTimeout(() => { loader.style.display = 'none'; }, 900);
 }
 
@@ -831,10 +831,11 @@ if (!reduce) {
   }
 
   function closeModal() {
+    overlay.classList.remove('is-open');
     overlay.classList.add('is-closing');
     modal.addEventListener('animationend', function done() {
       modal.removeEventListener('animationend', done);
-      overlay.classList.remove('is-open', 'is-closing');
+      overlay.classList.remove('is-closing');
       overlay.setAttribute('aria-hidden', 'true');
       openBtn.focus();
     }, { once: true });
