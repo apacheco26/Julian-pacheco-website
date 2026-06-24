@@ -31,29 +31,6 @@ html{scroll-behavior:smooth;scroll-snap-type:y proximity}
 body{background:var(--bg);color:var(--ink);font-family:var(--body);-webkit-font-smoothing:antialiased;line-height:1.5;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
 ::selection{background:var(--accent);color:var(--bg)}
-#loader{position:fixed;inset:0;z-index:1000;background:#0d1117;display:flex;align-items:center;justify-content:center;transition:transform .8s cubic-bezier(.76,0,.24,1);pointer-events:all;overflow:hidden}
-#loader.done{transform:translateY(-100%);pointer-events:none}
-#loader .term{background:#0d0d0d;color:#e0e0e0;font-family:var(--mono);font-size:13px;border-radius:var(--border-radius-lg);overflow:hidden;border:0.5px solid #333;width:min(640px,92vw);box-shadow:0 32px 96px rgba(0,0,0,.7);max-height:85vh;display:flex;flex-direction:column}
-#loader .term-bar{background:#1a1a1a;padding:10px 14px;display:flex;align-items:center;gap:8px;border-bottom:0.5px solid #333;flex-shrink:0}
-#loader .dot{width:12px;height:12px;border-radius:50%}
-#loader .term-body{padding:18px 20px;line-height:1.8;flex:1;overflow-y:auto;scrollbar-width:none}
-#loader .term-body::-webkit-scrollbar{display:none}
-#loader .cmd{color:#e0e0e0}
-#loader .dim{color:#666}
-#loader .err{color:#f08080}
-#loader .ok{color:#7dd3a8}
-#loader .warn{color:#f9c74f}
-#loader .path{color:#7ab4f5}
-#loader .local{color:#7dd3a8}
-#loader .remote{color:#c792ea}
-#loader .line{display:block;min-height:1.8em}
-#loader .cursor{display:inline-block;width:8px;height:14px;background:#e0e0e0;animation:blink 1s step-end infinite;vertical-align:middle;margin-left:1px}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
-#loader .loading-bar-wrap{margin:8px 0 14px}
-#loader .loading-bar-bg{background:#222;border-radius:4px;height:6px;width:260px;overflow:hidden}
-#loader .loading-bar-fill{height:6px;background:#7dd3a8;border-radius:4px;width:0%}
-#loader .ssh-box{border:0.5px solid #2a2a2a;border-left:2px solid #c792ea;background:#111;padding:10px 14px;margin:6px 0 10px;border-radius:4px}
-#loader .motd{border:0.5px solid #1e3a2a;background:#0e1f17;padding:10px 14px;margin:6px 0 10px;border-radius:4px;color:#7dd3a8;font-size:12px;line-height:1.7}
 nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:1.4rem clamp(1.2rem,5vw,4rem);mix-blend-mode:difference}
 .brand{font-family:var(--mono);font-size:.8rem;letter-spacing:.05em;color:#fff}
 .nav-links{display:flex;gap:clamp(1rem,3vw,2.4rem);font-family:var(--mono);font-size:.78rem;color:#fff}
@@ -237,17 +214,6 @@ html{overscroll-behavior-y:none}
 </style>
 </head>
 <body>
-<div id="loader" aria-label="Loading">
-  <div class="term">
-    <div class="term-bar">
-      <div class="dot" style="background:#ff5f57"></div>
-      <div class="dot" style="background:#febc2e"></div>
-      <div class="dot" style="background:#28c840"></div>
-      <span style="color:#888;font-size:12px;margin-left:8px;font-family:var(--mono);">bash — 80×24</span>
-    </div>
-    <div class="term-body" id="tbody"></div>
-  </div>
-</div>
 <nav>
   <a href="#top" class="brand">JP&#8260;</a>
   <div class="nav-links">
@@ -500,150 +466,8 @@ html{overscroll-behavior-y:none}
 <script>
 history.scrollRestoration = 'manual';
 window.scrollTo(0, 0);
-document.documentElement.style.overflow = 'hidden';
 const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-const imgPromise = Promise.all([
-  'assets/bg1-mountain.jpg',
-  'assets/bg2-story.jpg',
-  'assets/bg3-experience.png',
-  'assets/bg4-research.png',
-  'assets/bg5-contact.png'
-].map(src => new Promise(res => { const i = new Image(); i.onload = i.onerror = res; i.src = src; })));
-
-// ── Terminal boot sequence ─────────────────────────────────────
-const loader = document.getElementById('loader');
-
-function revealPage() {
-  loader.classList.add('done');
-  loader.setAttribute('aria-hidden', 'true');
-  document.documentElement.style.overflow = '';
-  setTimeout(() => { document.body.classList.add('loaded'); }, 850);
-  setTimeout(() => { loader.style.display = 'none'; }, 900);
-}
-
-if (reduce) {
-  loader.style.display = 'none';
-  document.body.classList.add('loaded');
-  document.documentElement.style.overflow = '';
-} else {
-  const tb = document.getElementById('tbody');
-  let html = '';
-
-  function append(content) { html += content; tb.innerHTML = html; tb.scrollTop = tb.scrollHeight; }
-  function line(cls, text) { append(`<span class="line ${cls}">${text}</span>`); }
-  function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
-
-  async function typeCmd(promptText, promptCls, cmd, delay=48, jitter=18) {
-    let partial = '';
-    append(`<span class="line"><span class="${promptCls}">${promptText}</span> <span class="cmd" id="typing"></span><span class="cursor"></span></span>`);
-    for (const ch of cmd) {
-      partial += ch;
-      const el = tb.querySelector('#typing');
-      if (el) el.textContent = partial;
-      await sleep(delay + Math.random()*jitter);
-    }
-    html = html
-      .replace('<span class="cursor"></span></span>', '</span>')
-      .replace('<span class="cmd" id="typing"></span>', `<span class="cmd">${cmd}</span>`);
-    append('');
-  }
-
-  async function typeThenCorrect(promptText, promptCls, wrong, correct, delay=48) {
-    let partial = '';
-    append(`<span class="line"><span class="${promptCls}">${promptText}</span> <span class="cmd" id="typing"></span><span class="cursor"></span></span>`);
-    for (const ch of wrong) {
-      partial += ch;
-      const el = tb.querySelector('#typing');
-      if (el) el.textContent = partial;
-      await sleep(delay + Math.random()*18);
-    }
-    await sleep(120);
-    while (partial.length > 0) {
-      partial = partial.slice(0, -1);
-      const el = tb.querySelector('#typing');
-      if (el) el.textContent = partial;
-      await sleep(22 + Math.random()*12);
-    }
-    await sleep(80);
-    for (const ch of correct) {
-      partial += ch;
-      const el = tb.querySelector('#typing');
-      if (el) el.textContent = partial;
-      await sleep(delay + Math.random()*18);
-    }
-    html = html
-      .replace('<span class="cursor"></span></span>', '</span>')
-      .replace('<span class="cmd" id="typing"></span>', `<span class="cmd">${correct}</span>`);
-    append('');
-  }
-
-  async function loadingBar(id, speed=10) {
-    const bar = document.getElementById(id);
-    for (let i=0; i<=100; i+=2) { if(bar) bar.style.width = i+'%'; await sleep(speed); }
-  }
-
-  async function run() {
-    await sleep(100);
-    await typeCmd('~$', 'local', 'ssh msd_grad@julian_pa -p 2026', 20);
-    await sleep(200);
-
-    append(`<span class="line ssh-box"><span class="dim">The authenticity of host 'julian_pa (192.168.2.26)' can't be established.</span><br><span class="dim">ED25519 key fingerprint is SHA256:xK9mTq2Lv8Rn3Wp7Yz4Jd1Fb6Uc0Oe5Nh.</span><br><span class="warn">Are you sure you want to continue connecting (yes/no)?</span></span>`);
-    await sleep(320);
-    await typeCmd('', 'dim', 'yes', 28);
-    await sleep(120);
-    line('warn', "Warning: Permanently added 'julian_pa' (ED25519) to the list of known hosts.");
-    await sleep(80);
-    line('dim', "msd_grad@julian_pa's password: ");
-    await sleep(250);
-    line('dim', '................');
-    await sleep(130);
-
-    append(`<span class="line loading-bar-wrap"><div class="loading-bar-bg"><div class="loading-bar-fill" id="lbar2"></div></div></span>`);
-    await loadingBar('lbar2', 6);
-    await sleep(80);
-
-    append(`<span class="line motd">
-  ┌─────────────────────────────────────────────┐<br>
-  │  julian_pa — julians_portfolio VM  •  port 2026  │<br>
-  │  Ubuntu 22.04.3 LTS  •  kernel 5.15.0-91    │<br>
-  │  uptime: 14 days, 3 hrs                     │<br>
-  └─────────────────────────────────────────────┘<br>
-  <span class="dim">last login: Wed Jun 17 22:41:09 2026 from 10.0.0.4</span>
-</span>`);
-    await sleep(140);
-
-    await typeCmd('msd_grad@julian_pa:~$', 'remote', 'ls -a', 20);
-    await sleep(60);
-    line('path', '.who_is_julian/   research_notes/   capstone_housing/   fun_ml_projects/   marathon_logs/   concert_list/   coursework/   scripts/   world_cup_tracker/   .env   .bashrc   .gitconfig');
-    line('', '');
-
-    await typeThenCorrect('msd_grad@julian_pa:~$', 'remote', 'cd who_is_julian', 'cd .who_is_julian', 22);
-    await sleep(50);
-    await typeCmd('msd_grad@julian_pa:~/.who_is_julian$', 'remote', 'ls', 20);
-    await sleep(60);
-    line('path', 'story/   toolkit/   research/   index.html');
-    line('', '');
-
-    await typeCmd('msd_grad@julian_pa:~/.who_is_julian$', 'remote', 'cd story', 20);
-    await sleep(80);
-    line('ok', 'Changed to directory: ~/.who_is_julian/story');
-    line('', '');
-
-    await typeCmd('msd_grad@julian_pa:~/.who_is_julian/story$', 'remote', 'open julian_pacheco_portfolio.html', 38, 22);
-    await sleep(200);
-    line('ok', 'Opening julian_pacheco_portfolio.html...');
-    line('', '');
-
-    setTimeout(() => imgPromise.then(revealPage), 700);
-  }
-
-  run();
-
-  setTimeout(() => {
-    if (!document.body.classList.contains('loaded')) revealPage();
-  }, 25000);
-}
+document.body.classList.add('loaded');
 
 // ── Scroll reveal ──────────────────────────────────────────────
 const io = new IntersectionObserver((entries) => {
