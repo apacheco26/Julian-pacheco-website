@@ -89,7 +89,7 @@ section{padding:clamp(1.8rem,3.5vw,2.8rem) clamp(1.2rem,5vw,4rem);position:relat
 .pub .pub-title strong{color:var(--accent);font-weight:600}
 .pub .pub-venue{color:var(--muted);font-size:clamp(.92rem,1.2vw,1.1rem);font-family:var(--mono)}
 .pub .pub-type{font-family:var(--mono);font-size:.68rem;color:var(--bg);background:var(--accent);padding:.15rem .5rem;border-radius:4px;flex-shrink:0;text-transform:uppercase;letter-spacing:.04em}
-.pub .pub-type.talk{background:var(--accent-dim);color:var(--ink)}
+.pub .pub-type.talk{background:var(--accent-dim);color:#fff}
 .pub .pub-type.poster{background:var(--bg-soft);color:var(--muted)}
 @media(max-width:640px){.pub{flex-wrap:wrap;gap:.6rem}}
 .skill-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(1.5rem,4vw,3rem)}
@@ -268,10 +268,9 @@ html{overscroll-behavior-y:none}
   <div class="section-head"><span class="section-num">01</span><h2>Story</h2></div>
   <div class="about-center reveal">
     <p>I'm a biomedical researcher with more than four years in HIV immunology and nonhuman primate models at OHSU's Vaccine and Gene Therapy Institute. Over that time I came to believe that ingenuity wasn't what slowed discovery down. The data was.</p>
-    <p>Every new technique we introduced generated more data, faster and at greater complexity. But I kept watching promising questions stall because no one had the time or tools to explore what we'd already collected. The researchers I learned from saw the same problem from different angles: Dr. Lydie Trautmann, who first brought me into the field; Dr. Hiroshi Takata, who mentored me across two labs; and Dr. Afam Okoye, whose group I work with now. Even on strong teams, the constraint held: our ability to measure biology had outpaced our ability to analyze it.</p>
-    <p>So I went after the other half of the toolkit, a master's in data science from Willamette University. I built public health dashboards, data pipelines, and statistical and machine learning models of regional affordability. That work taught me to turn large, fragmented datasets into systems that support clearer questions, reproducible analysis, and better decisions.</p>
-    <p>Now I work at the intersection of biology, data science, and machine learning, applying computational methods to immunology datasets that conventional approaches struggle to capture in full.</p>
-    <p>My long term goal is translational: to move discoveries from biological measurement to therapeutic development and, eventually, to patients. Immunology is where this started, but my interests run wider, to new data types, new domains, and complex problems where better analysis can surface what would otherwise stay hidden. I want to keep working at that boundary between wet lab and computation, wherever the next hard question happens to live.</p>
+    <p>Every new technique we introduced generated more data, faster and at greater complexity, yet I kept watching promising questions stall because no one had the time or tools to explore what we'd already collected. The researchers I learned from saw the same problem from different angles. Dr. Lydie Trautmann first brought me into the field, Dr. Hiroshi Takata mentored me across two labs, and Dr. Afam Okoye leads the group I work with now. Even on strong teams the constraint held. Our ability to measure biology had outpaced our ability to analyze it.</p>
+    <p>So I went after the other half of the toolkit, a master's in data science from Willamette University. There I built public health dashboards, data pipelines, and statistical and machine learning models of regional affordability. That work taught me to turn large, fragmented datasets into systems that support clearer questions, reproducible analysis, and better decisions. Now I apply those methods to immunology datasets that conventional approaches struggle to capture in full. This is work at the intersection of biology, data science, and machine learning.</p>
+    <p>My long term goal is translational. I want to move discoveries from biological measurement to therapeutic development and, eventually, to patients. Immunology is where this started, but my interests run wider, to new data types, new domains, and complex problems where better analysis can surface what would otherwise stay hidden. I'm open to wherever the next hard question lives, as long as it keeps challenging me and the work is worth doing.</p>
     <div class="info-icons">
       <div class="info-icon-item"><img src="assets/icon-immunology.png" alt=""><span class="info-icon-label">Immunology</span></div>
       <div class="info-icon-item"><img src="assets/icon-data-science.png" alt=""><span class="info-icon-label">Data Science</span></div>
@@ -332,12 +331,9 @@ html{overscroll-behavior-y:none}
       <div class="pub-title">Takata H, <strong>Pacheco J</strong>, et al. &ldquo;RV550: IL-15 Superagonist N-803 at ART Interruption Enhances NK and T Cell Proliferation and Activation Prior to Viral Rebound.&rdquo; Contributions featured.</div>
       <div class="pub-venue">Keystone Symposia &mdash; HIV Persistence, Remission, and Cure &middot; Breckenridge, CO</div>
     </div>
-     <a href="https://www.croiconference.org/wp-content/uploads/sites/2/posters/2025/444-2025.pdf"
-     target="_blank"
-     rel="noopener noreferrer"
-     class="pub-type poster">
+     <span class="pub-type poster">
     Poster
-  </a>
+  </span>
   </div>
   <div class="pub reveal">
     <div class="year">2025</div>
@@ -461,9 +457,6 @@ html{overscroll-behavior-y:none}
     </button>
   </div>
   <div class="contact-links">
-     <a href="tel:+15035551234" data-magnetic aria-label="Phone">
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-    </a>
     <a href="https://github.com/apacheco26" target="_blank" rel="noopener" data-magnetic aria-label="GitHub">
       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
     </a>
