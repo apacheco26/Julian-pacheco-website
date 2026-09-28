@@ -8,33 +8,20 @@ Install the **Live Server** extension, then right-click `index.html` → *Open w
 
 ## Deploy
 
-### Option A — Netlify (drag & drop, no GitHub)
-1. Go to app.netlify.com → drag this folder onto the deploy box.
-2. Site goes live at a `*.netlify.app` URL instantly.
-3. Add custom domain: Site settings → Domain management → Add `julian-pacheco.com`.
+Self-hosted on the home server (Ubuntu) behind a Cloudflare Tunnel. Caddy serves the site from `/home/julian/sites/julian-pacheco.com` on `127.0.0.1:8181`; `cloudflared` publishes it. No router ports are open.
 
-### Option B — Netlify / Cloudflare Pages from GitHub (auto-deploy on push)
+Push to `main`, then from a checkout run:
+
 ```bash
-git init
-git add .
-git commit -m "feat: launch resume site"
-gh repo create julian-pacheco-site --public --source=. --push
+./deploy.sh --dry-run   # preview
+./deploy.sh             # sync to the server over SSH
 ```
-Then connect the repo in Netlify/Cloudflare Pages. Every push redeploys.
 
-## Point the domain (registered at Squarespace)
+Headers (CSP, HSTS, etc.), the `www` redirect and 404 rules live in the server's `/etc/caddy/Caddyfile`, not in this repo. Fonts are self-hosted in `assets/fonts/`, so the CSP allows no third-party origins.
 
-Your domain lives at Squarespace; you only change its DNS to point here.
+## Domain
 
-**Easiest robust path — move DNS to Cloudflare (gives apex CNAME flattening + free CDN, sets you up for the multi-app routing later):**
-1. Add the site to Cloudflare → it gives you two nameservers.
-2. Squarespace → Settings → Domains → your domain → Nameservers → switch to Cloudflare's.
-3. In Cloudflare DNS, add the CNAME your host (Netlify/Pages) provides for both apex and `www`.
-
-**Or point directly from Squarespace DNS:**
-- Squarespace → Settings → Domains → your domain → DNS Settings.
-- Add the records your host gives you (Netlify provides A records for apex + a CNAME for `www`).
-- SSL auto-provisions once DNS resolves (minutes to a few hours).
+Registered at Squarespace; nameservers point to Cloudflare, which holds the DNS records. The apex and `www` are Cloudflare Tunnel routes to `http://localhost:8181`.
 
 ## To customize
 - Update the LinkedIn / Google Scholar `href`s in the contact section.
