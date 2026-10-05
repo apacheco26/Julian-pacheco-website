@@ -111,7 +111,7 @@ section{padding:clamp(1.8rem,3.5vw,2.8rem) clamp(1.2rem,5vw,4rem);position:relat
 .pub .pub-type.talk{background:var(--accent-dim);color:#fff}
 .pub .pub-type.poster{background:var(--bg-soft);color:var(--muted)}
 @media(max-width:640px){.pub{flex-wrap:wrap;gap:.6rem}}
-.skill-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(1.5rem,4vw,3rem)}
+.skill-cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:clamp(1.5rem,4vw,3rem)}
 .skill-group h3{font-family:var(--mono);font-size:.8rem;color:var(--accent);margin-bottom:1.2rem;letter-spacing:.05em;text-transform:uppercase}
 .skill-group ul{list-style:none}
 .skill-group li{padding:.55rem 0;border-bottom:1px solid var(--line-solid);font-size:.98rem;color:var(--ink);display:flex;gap:.7rem;justify-content:flex-start;align-items:center}
@@ -290,10 +290,10 @@ html{overscroll-behavior-y:none}
 <section id="focus" tabindex="-1" style="display:flex;flex-direction:column;justify-content:center">
   <div class="section-head"><span class="section-num">01</span><h2>Story</h2></div>
   <div class="about-center reveal">
-    <p>I'm a biomedical researcher with more than four years in HIV immunology and nonhuman primate models at OHSU's Vaccine and Gene Therapy Institute. Over that time I came to believe that the bottleneck on discovery was the data itself.</p>
-    <p>Every new technique we introduced generated more data, faster and at greater complexity, yet I kept watching promising questions stall because no one had the time or tools to explore what we'd already collected. The researchers I learned from saw the same problem from different angles. Dr. Lydie Trautmann first brought me into the field, Dr. Hiroshi Takata mentored me across two labs, and Dr. Afam Okoye leads the group I work with now. Even on strong teams the constraint held: our ability to measure biology had outpaced our ability to analyze it.</p>
-    <p>So I went after the other half of the toolkit, a master's in data science from Willamette University. There I built public health dashboards and data pipelines, along with statistical and machine learning models of regional affordability. That work taught me to turn large, fragmented datasets into analysis that holds up when someone else questions it or builds on it. I now apply those methods to immunology data, where the questions I care about run in more dimensions than conventional analysis can follow.</p>
-    <p>My long-term goal is translational: move discoveries from biological measurement to therapeutic development and, eventually, to patients. Immunology is where this started, but my interests run wider: I want to apply that same kind of analysis to new data types and new domains, wherever it's missing. I'll go wherever the hardest open question is.</p>
+    <p>I'm a biomedical researcher with more than four years in HIV immunology and nonhuman primate models at OHSU's Vaccine and Gene Therapy Institute. Over that time I came to believe the bottleneck on discovery was no longer collecting data but using it.</p>
+    <p>Every new technique we introduced generated more data, faster and at greater complexity, yet I kept watching promising questions stall because no one had the time or tools to explore what we'd already collected. Dr. Lydie Trautmann first brought me into the field, Dr. Hiroshi Takata mentored me across two labs, and Dr. Afam Okoye leads the group I work with now. On all of those strong teams the constraint held: our ability to measure biology had outpaced our ability to analyze it.</p>
+    <p>So I went after the other half of the toolkit, a master's in data science from Willamette University. There I built data pipelines, public health dashboards, and statistical and machine learning models of county-level housing affordability, and learned to make analysis hold up when someone else questions it. On a dashboard of 25 years of CDC mortality data across 3,000+ counties, I caught a population-denominator break between dataset versions that was inflating post-2021 dementia rates, and corrected it. I now bring the same habits to immunology data, where I've started building a Python copilot that reproduces FlowJo gating and flags low-confidence gates for human review.</p>
+    <p>My long-term goal is translational: move discoveries from biological measurement to therapeutic development and, eventually, to patients. I'm looking for data roles where biology, machine learning, and drug discovery meet, because the hardest open questions there are usually data problems.</p>
     <div class="info-icons">
       <div class="info-icon-item"><img src="assets/icon-immunology.png" alt=""><span class="info-icon-label">Immunology</span></div>
       <div class="info-icon-item"><img src="assets/icon-data-science.png" alt=""><span class="info-icon-label">Data Science</span></div>
@@ -402,32 +402,37 @@ html{overscroll-behavior-y:none}
 </section>
 <section id="skills">
   <div class="section-head"><span class="section-num">05</span><h2>Toolkit</h2></div>
-  <div class="skill-cols" style="grid-template-columns:repeat(4,1fr)">
+  <div class="skill-cols">
     <div class="skill-group reveal"><h3>Data Analytics</h3><ul>
       <li>Longitudinal Regression Analysis</li>
       <li>Unsupervised Clustering</li>
       <li>Time Series Analysis</li>
       <li>Automation Exposure Analysis</li>
       <li><img class="skill-icon" src="assets/icon-pandas.png" alt="">pandas</li>
+      <li>Nonparametric Statistics (Kruskal-Wallis, Wilcoxon)</li>
+      <li>Interactive Dashboards (Shiny, Plotly Dash)</li>
     </ul></div>
     <div class="skill-group reveal"><h3>Machine Learning</h3><ul>
       <li>Supervised Classification & Regression</li>
       <li>Feature Extraction & Classification</li>
       <li>Dimensionality Reduction (PCA, TruncatedSVD)</li>
       <li>Ensemble Model Optimization</li>
-      <li>Neural N0etwork Architecture</li>
+      <li>Neural Network Architecture</li>
       <li><img class="skill-icon" src="assets/icon-scikit-learn.png" alt="">scikit-learn</li>
       <li><img class="skill-icon" src="assets/icon-tensorflow.png" alt="">TensorFlow</li>
+      <li>PyTorch</li>
+      <li>XGBoost</li>
     </ul></div>
     <div class="skill-group reveal"><h3>Data Engineering</h3><ul>
       <li>ETL pipeline design (SQLAlchemy, Python)</li>
       <li>Data modeling for Analytics</li>
       <li>Pipeline Orchestration & Automation</li>
-      <li>Database Architecture & OptimizationB</li>
+      <li>Database Architecture & Optimization</li>
       <li><img class="skill-icon" src="assets/icon-airflow.png" alt="">Apache Airflow</li>
       <li><img class="skill-icon" src="assets/icon-dbt.png" alt="">dbt</li>
       <li><img class="skill-icon" src="assets/icon-duckdb.png" alt="">DuckDB</li>
-      <li><img class="skill-icon" src="assets/icon-databricks.png" alt="">Databricks</li>
+      <li>PostgreSQL</li>
+      <li>Docker</li>
     </ul></div>
     <div class="skill-group reveal"><h3>Languages</h3><ul>
       <li><img class="skill-icon" src="assets/icon-python.png" alt="">Python</li>
@@ -435,6 +440,13 @@ html{overscroll-behavior-y:none}
       <li><img class="skill-icon" src="assets/icon-sql.png" alt="">SQL</li>
       <li>Bash</li>
       <li>C#</li>
+    </ul></div>
+    <div class="skill-group reveal"><h3>Immunology &amp; Lab</h3><ul>
+      <li>Flow Cytometry (FlowJo, GraphPad Prism)</li>
+      <li>Spectral Panel Design (20-Color, Cytek Aurora)</li>
+      <li>CFSE T Cell Proliferation Assays</li>
+      <li>PBMC Isolation &amp; Cryopreservation</li>
+      <li>Biorepository Tracking &amp; Data Management</li>
     </ul></div>
   </div>
   <div class="projects-row reveal" id="projects">
@@ -455,6 +467,29 @@ html{overscroll-behavior-y:none}
         <div class="project-card-links">
           <a class="project-card-link" href="https://beyond-the-grid.julian-pacheco.com" target="_blank" rel="noopener">Open dashboard →</a>
         </div>
+      </div>
+      <div class="project-card">
+        <span class="project-card-tag">Data Pipeline</span>
+        <span class="project-card-title">Prague Metro Data Pipeline</span>
+        <span class="project-card-desc">A Dockerized Airflow pipeline writing Parquet snapshots to an S3 lake, with a MongoDB pipeline feeding a PostgreSQL warehouse and a dbt and DuckDB star schema modeled for ridership questions. I diagnosed and fixed three production pipeline failures, built the Grafana dashboards, and documented design decisions as ADRs.</span>
+      </div>
+      <div class="project-card">
+        <span class="project-card-tag">Data Dashboard · R · Shiny</span>
+        <span class="project-card-title">MortalityTrends</span>
+        <span class="project-card-desc">An interactive dashboard for 25 years of county level CDC WONDER mortality data across 3,000+ counties, with choropleth maps, disparity views, and causes of death grouped into 18 analytical buckets. Caught a population denominator break across CDC WONDER dataset versions that inflated post-2021 dementia rates, and corrected it.</span>
+        <div class="project-card-links">
+          <a class="project-card-link" href="https://mortality.julian-pacheco.com" target="_blank" rel="noopener">Open dashboard →</a>
+        </div>
+      </div>
+      <div class="project-card">
+        <span class="project-card-tag">Machine Learning · scikit-learn</span>
+        <span class="project-card-title">News Credibility Classifier</span>
+        <span class="project-card-desc">Binary and multi-class text classifiers predicting news credibility across a 44,906-article labeled corpus, using TF-IDF and logistic regression in a scikit-learn pipeline tuned with GridSearchCV. Reached 99.6% test accuracy on the binary task, and a label-shuffling check dropped accuracy to 50.1%, ruling out leakage. Group project.</span>
+      </div>
+      <div class="project-card">
+        <span class="project-card-tag">Python · Flow Cytometry · In Progress</span>
+        <span class="project-card-title">Flow Gating Copilot</span>
+        <span class="project-card-desc">A human-in-the-loop copilot that uses FlowKit to reproduce FlowJo gating strategies from workspace and FCS files, validates each gate against FlowJo-exported statistics, and flags low-confidence gates for human review instead of auto-rejecting them.</span>
       </div>
       <div class="project-card">
         <span class="project-card-tag">Quarto · PostgreSQL · Python · Willamette MS DS Capstone</span>
